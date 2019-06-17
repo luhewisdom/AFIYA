@@ -35,6 +35,12 @@ public class UserController {
     	 userService.saveUser(user);
     }
 
+
+    @GetMapping("/staff/register")
+    public Iterable<User> client(){
+        return userService.findAll();
+    }
+
     @PostMapping(path = "/staff/register",consumes="application/json")
     @ResponseStatus(HttpStatus.CREATED)
     public void register(@Valid @RequestBody User user,@RequestParam String level)
