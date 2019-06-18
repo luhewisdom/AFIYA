@@ -5,6 +5,7 @@ import lombok.Data;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.List;
 
 
 @Data
@@ -29,5 +30,20 @@ public class Hospital {
 	private Long latitude;
 	
 	private Long longtuide;
+
+
+	@OneToOne
+	@JoinColumn(name ="fx_user")
+	private User user;
+
+	public void addUser(User u){
+		this.user = u;
+
+	}
+	public void removeUser(User u)
+	{
+			this.user = null;
+	}
+
 
 }

@@ -12,6 +12,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping(path="/",produces="application/json")
+@CrossOrigin("*")
 public class HospitalController {
 	
 	private HospitalService hospitalService;
@@ -45,6 +46,4 @@ public class HospitalController {
 	public Hospital createHospital(@RequestBody Hospital hospital) {
 		return hospitalService.save(hospital);
 	}
-	
-	
 }

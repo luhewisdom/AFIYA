@@ -1,7 +1,7 @@
 package com.android.rest.service;
 
 import com.android.rest.domain.Hospital;
-import com.android.rest.repository.HospitalRepository;
+import com.android.rest.repository.HospitalRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,80 +15,80 @@ import java.util.Optional;
 public class HospitalServiceimp  implements HospitalService{
 
 	
-	public HospitalRepository hospitalRepository;
+	public HospitalRepo hospitalRepo;
 	
     @Autowired
-	public HospitalServiceimp(HospitalRepository hospitalRepository)
+	public HospitalServiceimp(HospitalRepo hospitalRepo)
 	{
-		this.hospitalRepository = hospitalRepository;
+		this.hospitalRepo = hospitalRepo;
 	}
 
 	@Override
 	public Hospital save(Hospital hospital) {
-		return hospitalRepository.save(hospital);
+		return hospitalRepo.save(hospital);
 	}
 
 	@Override
 	public Iterable<Hospital> saveAll(Iterable<Hospital> hospitals) {
-		return hospitalRepository.saveAll(hospitals);
+		return hospitalRepo.saveAll(hospitals);
 	}
 
 	@Override
 	public Optional<Hospital> findById(Long id) {
-		return  hospitalRepository.findById(id);
+		return  hospitalRepo.findById(id);
 	}
 
 	@Override
 	public boolean existsById(Long id) {
-		return hospitalRepository.existsById(id);
+		return hospitalRepo.existsById(id);
 	}
 
 	@Override
 	public Iterable<Hospital> findAll() {
-		return hospitalRepository.findAll();
+		return hospitalRepo.findAll();
 	}
 
 	@Override
 	public Iterable<Hospital> findAllById(Iterable<Long> ids) {
-		return hospitalRepository.findAllById(ids);
+		return hospitalRepo.findAllById(ids);
 	}
 
 	@Override
 	public Iterable<Hospital> findAll(Sort sort) {
-		return  hospitalRepository.findAll(sort);
+		return  hospitalRepo.findAll(sort);
 	}
 
 	@Override
 	public Page<Hospital> findAll(Pageable pageable) {
-		return hospitalRepository.findAll(pageable);
+		return hospitalRepo.findAll(pageable);
 	}
 
 	@Override
 	public long count() {
-		return hospitalRepository.count();
+		return hospitalRepo.count();
 	}
 
 	@Override
 	public void deleteById(Long id) {
-		hospitalRepository.deleteById(id);
+		hospitalRepo.deleteById(id);
 		
 	}
 
 	@Override
 	public void delete(Hospital hospital) {
-		hospitalRepository.delete(hospital);
+		hospitalRepo.delete(hospital);
 		
 	}
 
 	@Override
 	public void deleteAll(Iterable<Hospital> hospitals) {
-		hospitalRepository.deleteAll(hospitals);
+		hospitalRepo.deleteAll(hospitals);
 		
 	}
 
 	@Override
 	public void deleteAll() {
-		hospitalRepository.deleteAll();
+		hospitalRepo.deleteAll();
 		
 	}
     

@@ -43,21 +43,20 @@ public class UserController {
 
     @PostMapping(path = "/staff/register",consumes="application/json")
     @ResponseStatus(HttpStatus.CREATED)
-    public void register(@Valid @RequestBody User user,@RequestParam String level)
+    public void register(@Valid @RequestBody User user,@RequestParam(defaultValue = "STAFF") String level)
     {
-         Role  role =  roleService.findByRoleName(level);
-         if (role == null)
-         {
-             role = new Role(level);
-
-         }
          if(userService.findUserByUsername(user.getUsername()) != null)
          {
              throw new BadCredentialsException("User with username: " + user.getUsername() + " already exists");
          }
          userService.saveUser(user,level);
     }
-
+    @PostMapping(path = "/staff/register/role",consumes="application/json")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void createRole(@Valid @RequestBody Role role)
+    {
+        roleService.save(role);
+    }
 
     @GetMapping("/access-denied")
     public String accessDenied(){

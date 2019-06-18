@@ -63,6 +63,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 				 .antMatchers("/hospitals").permitAll()
 				 .antMatchers("/user").permitAll()
 				 .antMatchers("/user/staff/**").hasAuthority("SUPER")
+				 .antMatchers("/appoint/**").hasAuthority("STAFF")
+				 .antMatchers("/myappoint/**").hasAuthority("STAFF")
 				 .and()
 				 .formLogin()
 				 .successHandler(mySuccessHandler)

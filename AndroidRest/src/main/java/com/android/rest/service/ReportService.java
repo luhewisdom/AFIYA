@@ -1,0 +1,34 @@
+package com.android.rest.service;
+
+import com.android.rest.domain.Report;
+import org.springframework.data.domain.Sort;
+
+import java.util.Optional;
+
+
+public interface ReportService {
+    public Report save(Report Report);
+
+    public Iterable<Report> saveAll(Iterable<Report> Reports);
+
+    Optional<Report> findById(Long id);
+
+    boolean existsById(Long id);
+
+    Iterable<Report> findAll();
+
+    Iterable<Report> findAllById(Iterable<Long> ids);
+
+
+    //Page<Report> findAll(Pageable pageable);
+
+    long count();
+
+    void deleteById(Long id);
+
+    void delete(Report Report);
+
+    void deleteAll(Iterable<Report> Reports);
+
+    void deleteAll();
+}
