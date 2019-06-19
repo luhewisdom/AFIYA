@@ -1,10 +1,12 @@
 package com.android.rest.service;
 
 import com.android.rest.domain.Report;
+import com.android.rest.domain.User;
 import com.android.rest.repository.ReportRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -47,7 +49,10 @@ public class ReportServiceImp implements ReportService {
         return reportRepo.findAllById(ids);
     }
 
-
+    @Override
+    public List<Report> findByUser(User user) {
+        return reportRepo.findByUser(user);
+    }
 
 
     @Override

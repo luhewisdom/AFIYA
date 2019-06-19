@@ -1,6 +1,7 @@
 package com.android.rest.service;
 
 import com.android.rest.domain.Hospital;
+import com.android.rest.domain.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -17,6 +18,7 @@ public interface HospitalService {
 	Optional<Hospital> findById(Long id);
 
 	boolean existsById(Long id);
+
 	
 	Iterable<Hospital> findAll();
 
@@ -25,6 +27,10 @@ public interface HospitalService {
 	Iterable<Hospital> findAll(Sort sort);
 	
 	Page<Hospital> findAll(Pageable pageable);
+
+	Hospital findByHname(String hname);
+
+	Hospital findByUser(User user);
 
 	long count();
 	

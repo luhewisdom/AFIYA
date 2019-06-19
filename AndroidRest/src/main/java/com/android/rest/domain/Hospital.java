@@ -15,20 +15,24 @@ public class Hospital {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(unique = true)
 	private Long id;
 	
 	@NotNull
 	@Size(min=5, message="Name must be at least 5 characters long")
+	@Column(unique = true)
 	private String hname;
+
+	private String image;
 	
-	private String hpass;
+	private String owendby;
 	
 	private String phoneNumbe;
 	
 	private String relativeAdress;
 	
 	private Long latitude;
-	
+
 	private Long longtuide;
 
 
@@ -40,10 +44,8 @@ public class Hospital {
 		this.user = u;
 
 	}
-	public void removeUser(User u)
+	public void removeUser()
 	{
 			this.user = null;
 	}
-
-
 }

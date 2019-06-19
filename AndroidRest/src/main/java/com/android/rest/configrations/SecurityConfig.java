@@ -59,12 +59,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 				 .authenticationEntryPoint(restAuthenticationEntryPoint)
 				 .and()
 				 .authorizeRequests()
-				 .antMatchers("/").permitAll()
-				 .antMatchers("/hospitals").permitAll()
-				 .antMatchers("/user").permitAll()
-				 .antMatchers("/user/staff/**").hasAuthority("SUPER")
-				 .antMatchers("/appoint/**").hasAuthority("STAFF")
-				 .antMatchers("/myappoint/**").hasAuthority("STAFF")
+				 .antMatchers("/hospital/**").permitAll()
+				 .antMatchers("/user/**").hasAuthority("SUPER")
+				 .antMatchers("/staff/**").hasAuthority("STAFF")
+				 .antMatchers("/appoint/**").hasAuthority("client")
+
 				 .and()
 				 .formLogin()
 				 .successHandler(mySuccessHandler)
@@ -73,10 +72,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 				 .httpBasic()
 				 .and()
 				 .logout();
-
-
-		     //.;
-	     	
 	  }
 	 @Override
 	 public void configure(WebSecurity webSecurity) throws Exception {

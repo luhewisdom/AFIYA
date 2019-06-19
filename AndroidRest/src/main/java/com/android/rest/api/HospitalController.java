@@ -11,9 +11,10 @@ import java.util.Optional;
 
 
 @RestController
-@RequestMapping(path="/",produces="application/json")
-@CrossOrigin("*")
+@RequestMapping(path="/hospital",produces="application/json")
 public class HospitalController {
+
+
 	
 	private HospitalService hospitalService;
 	
@@ -23,11 +24,6 @@ public class HospitalController {
 	}
 
 
-	@GetMapping
-	public Iterable<Hospital> hospitals()
-	{
-		return hospitalService.findAll();
-	}
 	@GetMapping("/hospitals")
 	public Iterable<Hospital> allHospital()
 	{
@@ -40,10 +36,4 @@ public class HospitalController {
 		return hospitalService.findById(id);
 	}
 
-
-	@PostMapping(consumes="application/json")
-	@ResponseStatus(HttpStatus.CREATED)
-	public Hospital createHospital(@RequestBody Hospital hospital) {
-		return hospitalService.save(hospital);
-	}
 }

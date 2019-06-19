@@ -1,8 +1,10 @@
 package com.android.rest.service;
 
 import com.android.rest.domain.Report;
+import com.android.rest.domain.User;
 import org.springframework.data.domain.Sort;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -19,7 +21,7 @@ public interface ReportService {
 
     Iterable<Report> findAllById(Iterable<Long> ids);
 
-
+    List<Report> findByUser(User user);
     //Page<Report> findAll(Pageable pageable);
 
     long count();

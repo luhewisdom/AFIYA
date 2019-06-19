@@ -2,11 +2,12 @@ package com.android.rest.service;
 
 
 import com.android.rest.domain.Card;
+import com.android.rest.domain.User;
 import com.android.rest.repository.CardRepo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -47,6 +48,11 @@ public class CardServiceImp implements CardService {
     }
 
     @Override
+    public Optional<Card> findOneById(Long id) {
+        return cardRepo.findById(id);
+    }
+
+    @Override
     public boolean existsById(Long id) {
         return cardRepo.existsById(id);
     }
@@ -61,7 +67,25 @@ public class CardServiceImp implements CardService {
         return cardRepo.findAllById(ids);
     }
 
-   
+    @Override
+    public Iterable<Card> findByHospitalUser(User user) {
+        return cardRepo.findByHospitalUser(user);
+    }
+
+    @Override
+    public Card findByCardNo(String cardno) {
+        return cardRepo.findByCardNo(cardno);
+    }
+
+    @Override
+    public Iterable<Card> findByDateOrderByAsc() {
+        return cardRepo.findAllByOrderByDateAsc();
+    }
+
+    @Override
+    public Iterable<Card> findByDateBetween(Date start, Date end) {
+        return cardRepo.findAllByDateBetween(start,end);
+    }
 
 
     @Override

@@ -15,8 +15,10 @@ public class Role {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(unique = true)
     private Long id;
 
+    @Column(unique = true)
     private String role;
 
     public Role(String level) {

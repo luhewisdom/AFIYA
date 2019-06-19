@@ -25,25 +25,21 @@ public class UserController {
 
 	
     @GetMapping("/users")
-    public Iterable<User> pogetAllUsers(){
+    public Iterable<User> getAllUsers(){
     	return  userService.findAll();
     }
-    @PostMapping(consumes="application/json")
-    @ResponseStatus(HttpStatus.CREATED)
-    public void createUser(@Valid @RequestBody User user)
+
+
+
+    @GetMapping("/users/{id}")
+    public User findOneUser(@PathVariable("id")Long id)
     {
-    	 userService.saveUser(user);
-    }
-
-
-    @GetMapping("/staff/register")
-    public Iterable<User> client(){
-        return userService.findAll();
+        return findOneUser(id);
     }
 
     @PostMapping(path = "/staff/register",consumes="application/json")
     @ResponseStatus(HttpStatus.CREATED)
-    public void register(@Valid @RequestBody User user,@RequestParam(defaultValue = "STAFF") String level)
+    public void registerHospitalUser(@Valid @RequestBody User user,@RequestParam(defaultValue = "STAFF") String level)
     {
          if(userService.findUserByUsername(user.getUsername()) != null)
          {
@@ -58,9 +54,6 @@ public class UserController {
         roleService.save(role);
     }
 
-    @GetMapping("/access-denied")
-    public String accessDenied(){
-        return "access_denied";
-    }
+
     
 }

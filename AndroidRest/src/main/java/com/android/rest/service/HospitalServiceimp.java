@@ -1,6 +1,7 @@
 package com.android.rest.service;
 
 import com.android.rest.domain.Hospital;
+import com.android.rest.domain.User;
 import com.android.rest.repository.HospitalRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -43,6 +44,8 @@ public class HospitalServiceimp  implements HospitalService{
 		return hospitalRepo.existsById(id);
 	}
 
+
+
 	@Override
 	public Iterable<Hospital> findAll() {
 		return hospitalRepo.findAll();
@@ -61,6 +64,16 @@ public class HospitalServiceimp  implements HospitalService{
 	@Override
 	public Page<Hospital> findAll(Pageable pageable) {
 		return hospitalRepo.findAll(pageable);
+	}
+
+	@Override
+	public Hospital findByHname(String hname) {
+		return hospitalRepo.findByHname(hname);
+	}
+
+	@Override
+	public Hospital findByUser(User user) {
+		return hospitalRepo.findByUser(user);
 	}
 
 	@Override

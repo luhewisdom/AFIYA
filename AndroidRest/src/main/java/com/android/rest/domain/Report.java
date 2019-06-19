@@ -1,6 +1,7 @@
 package com.android.rest.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -11,7 +12,11 @@ import java.util.Date;
 public class Report {
 
     @Id
+    @Column(unique = true)
     private Long id;
+
+    @Column(unique = true)
+    private String reportNO;
 
 
     private String bloodTest;
@@ -20,6 +25,7 @@ public class Report {
 
     private String otherTest;
 
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private Date reportDate;
 
     @PrePersist
