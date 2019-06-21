@@ -11,6 +11,7 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping(path="/",produces="application/json")
+@CrossOrigin(origins="*")
 public class HomeController {
 
     @Autowired

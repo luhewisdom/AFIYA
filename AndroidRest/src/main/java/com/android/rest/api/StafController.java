@@ -1,10 +1,7 @@
 package com.android.rest.api;
 
 
-import com.android.rest.domain.Card;
-import com.android.rest.domain.Hospital;
-import com.android.rest.domain.Report;
-import com.android.rest.domain.User;
+import com.android.rest.domain.*;
 import com.android.rest.service.CardService;
 import com.android.rest.service.HospitalService;
 import com.android.rest.service.ReportService;
@@ -15,10 +12,12 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.EmptyStackException;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
 @RequestMapping(path="/staff",produces="application/json")
+@CrossOrigin(origins="*")
 public class StafController {
 
     private HospitalService hospitalService;
@@ -45,15 +44,15 @@ public class StafController {
 
     @PostMapping(path = "/registerHospital",consumes="application/json")
     @ResponseStatus(HttpStatus.CREATED)
-    public Hospital createHospital(@RequestBody Hospital hospital,@AuthenticationPrincipal User user) {
+    public HospitalModel createHospital(@RequestBody Hospital hospital, @AuthenticationPrincipal User user) {
         hospital.setUser(user);
-        return hospitalService.save(hospital);
+        return HospitalModel.getHospitalModel(hospitalService.save(hospital));
     }
 
     @PutMapping(path = "/updateHospital/{id}",consumes = "application/json")
-    public Hospital updateHospital(@PathVariable("id") Long id, @RequestParam Hospital hospital)
+    public HospitalModel updateHospital(@PathVariable("id") Long id, @RequestParam Hospital hospital)
     {
-        return hospitalService.save(hospital);
+        return HospitalModel.getHospitalModel(hospitalService.save(hospital));
     }
 
     @DeleteMapping(path = "/deleteHospital/{id}")
@@ -68,24 +67,24 @@ public class StafController {
 
 
     @GetMapping("/appointments")
-    public Iterable<Card> seeAppointments (@AuthenticationPrincipal User user)
+    public Iterable<CardModel> seeAppointments (@AuthenticationPrincipal User user)
     {
-        return cardService.findByHospitalUser(user);
+        return CardModel.getCardModel((List<Card>) cardService.findByHospitalUser(user));
     }
 
     @GetMapping("/appointments/ordered/card")
-    public Card seeAppointment (@RequestParam("cardno") String cardno)
+    public CardModel seeAppointment (@RequestParam("cardno") String cardno)
     {
-        return cardService.findByCardNo(cardno);
+        return CardModel.getCardModel(cardService.findByCardNo(cardno));
     }
 
     @GetMapping("/appointments/ordered")
-    public Iterable<Card> seeInOrder ()
+    public Iterable<CardModel> seeInOrder ()
     {
-        return cardService.findByDateOrderByAsc();
+        return CardModel.getCardModel((List<Card>) cardService.findByDateOrderByAsc());
     }
     @PatchMapping(path = "approve/{id}", consumes = "application/json")
-    public Card updateAppointment (@PathVariable("id") Long id,
+    public CardModel updateAppointment (@PathVariable("id") Long id,
                                    @RequestParam("approve") boolean approve,
                                    @RequestParam("desc") String desc,
                                    @AuthenticationPrincipal User user)
@@ -93,7 +92,7 @@ public class StafController {
         Card card = cardService.findById(id).get();
         card.setApproved(approve);
         card.setDescription(desc);
-        return cardService.save(card);
+        return CardModel.getCardModel(cardService.save(card));
     }
 
     @DeleteMapping(path = "/appointment/delete")
@@ -109,13 +108,13 @@ public class StafController {
     }
     @PostMapping(path = "/report",consumes="application/json")
     @ResponseStatus(HttpStatus.CREATED)
-    public Report createHospital(@RequestBody Report report,@RequestParam("username")String username,  @AuthenticationPrincipal User user) {
+    public ReportModel createHospital(@RequestBody Report report,@RequestParam("username")String username,  @AuthenticationPrincipal User user) {
         User user1 = userService.findUserByUsername(username);
         Hospital hospital = hospitalService.findByUser(user);
 
         report.setHospital(hospital);
         report.setUser(user1);
-        return reportService.save(report);
+        return ReportModel.getReportModel(reportService.save(report));
     }
 
 }

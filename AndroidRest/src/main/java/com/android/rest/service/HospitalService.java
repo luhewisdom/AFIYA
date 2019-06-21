@@ -32,6 +32,8 @@ public interface HospitalService {
 
 	Hospital findByUser(User user);
 
+	Hospital findHospitalById(Long id);
+
 	long count();
 	
 	void deleteById(Long id);

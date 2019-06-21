@@ -40,12 +40,4 @@ public class Hospital {
 	@JoinColumn(name ="fx_user")
 	private User user;
 
-	public void addUser(User u){
-		this.user = u;
-
-	}
-	public void removeUser()
-	{
-			this.user = null;
-	}
 }

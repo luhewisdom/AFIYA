@@ -1,10 +1,7 @@
 package com.android.rest.api;
 
 
-import com.android.rest.domain.Card;
-import com.android.rest.domain.Hospital;
-import com.android.rest.domain.Report;
-import com.android.rest.domain.User;
+import com.android.rest.domain.*;
 import com.android.rest.service.CardService;
 import com.android.rest.service.HospitalService;
 import com.android.rest.service.ReportService;
@@ -21,32 +18,37 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController("/appoint")
+@CrossOrigin(origins="*")
 public class CardController {
 
-    @Autowired
     private CardService cardService;
-
-    @Autowired
     private UserService userService;
-
-    @Autowired
     private HospitalService hospitalService;
+    private ReportService reportService;
 
     @Autowired
-    private ReportService reportService;
+    public CardController(CardService cardService,UserService userService,
+                          HospitalService hospitalService,ReportService reportService)
+    {
+        this.reportService = reportService;
+        this.cardService = cardService;
+        this.hospitalService = hospitalService;
+        this.userService = userService;
+    }
 
 
     @GetMapping("/appoint/myappoint")
-    public List<Card>  cardList(@AuthenticationPrincipal UserDetails userDetails){
+    public List<CardModel>  cardList(@AuthenticationPrincipal UserDetails userDetails){
         User user = userService.findUserByUsername(userDetails.getUsername());
-        return  cardService.findByUserId(user.getId());
+        return  CardModel.getCardModel(cardService.findByUserId(user.getId()));
     }
 
 
     @PostMapping(path = "/appoint",consumes="application/json")
     @ResponseStatus(HttpStatus.CREATED)
-    public Card setAppointment(@Valid  @RequestBody Card card, @AuthenticationPrincipal User user,
-                               @RequestParam String hospital)
+    public CardModel setAppointment(@Valid  @RequestBody Card card,
+                                    @AuthenticationPrincipal User user,
+                                    @RequestParam String hospital)
     {
         Hospital hos = hospitalService.findByHname(hospital);
         if(hos == null){
@@ -55,11 +57,11 @@ public class CardController {
 
         card.setUser(user);
         card.setHospital(hos);
-        return  cardService.save(card);
+        return  CardModel.getCardModel(cardService.save(card));
     }
 
     @GetMapping("/appoint/report")
-    public ResponseEntity<List<Report>> getReport(@AuthenticationPrincipal UserDetails userDetails)
+    public ResponseEntity<List<ReportModel>> getReport(@AuthenticationPrincipal UserDetails userDetails)
     {
         User user1 = userService.findUserByUsername(userDetails.getUsername());
         List<Report> reports = reportService.findByUser(user1);
@@ -68,7 +70,7 @@ public class CardController {
             return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
         }
 
-        return new ResponseEntity<>(reports,HttpStatus.OK);
+        return new ResponseEntity<>(ReportModel.getReportModels(reports),HttpStatus.OK);
     }
 
 }

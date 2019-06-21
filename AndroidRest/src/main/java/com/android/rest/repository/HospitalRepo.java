@@ -12,5 +12,7 @@ public interface HospitalRepo extends PagingAndSortingRepository<Hospital,Long>{
 
     Hospital findByUser(User user);
 
+    Hospital findHospitalById(Long id);
+
 	
 }

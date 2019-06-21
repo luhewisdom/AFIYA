@@ -77,6 +77,11 @@ public class HospitalServiceimp  implements HospitalService{
 	}
 
 	@Override
+	public Hospital findHospitalById(Long id) {
+		return hospitalRepo.findHospitalById(id);
+	}
+
+	@Override
 	public long count() {
 		return hospitalRepo.count();
 	}
