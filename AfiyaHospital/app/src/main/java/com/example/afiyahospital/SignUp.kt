@@ -43,9 +43,6 @@ class SignUp : Fragment() {
         userViewModel = ViewModelProviders.of(this).get(UserViewModel::class.java)
         val activity: MainActivity = activity as MainActivity
         registerButton.setOnClickListener {
-
-
-
             val user = User(userNameEditText.text.toString(),emailEditText.text.toString(),passwordEditText.text.toString())
             if (!emptyValidation())
             {

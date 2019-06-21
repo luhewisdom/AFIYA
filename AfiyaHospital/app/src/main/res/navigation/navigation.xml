@@ -4,7 +4,9 @@
             android:id="@+id/navigation" app:startDestination="@id/login">
 
     <fragment android:id="@+id/login" android:name="com.example.loginpage.Login" android:label="Login">
-        <action android:id="@+id/action_login_to_signUp" app:destination="@id/signUp"/>
+        <action android:id="@+id/action_login_to_signUp" app:destination="@id/signUp" app:enterAnim="@anim/fad_in"
+                app:exitAnim="@anim/fade_out" app:popEnterAnim="@anim/slide_in_left"
+                app:popExitAnim="@anim/slide_in_right"/>
         <action android:id="@+id/action_login_to_hospitalPage" app:destination="@id/hospitalPage"/>
     </fragment>
     <fragment android:id="@+id/signUp" android:name="com.example.loginpage.SignUp" android:label="SignUp">

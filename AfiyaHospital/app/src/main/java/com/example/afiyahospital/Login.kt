@@ -54,14 +54,15 @@ class Login : Fragment() {
             if(!emptyValidation())
             {
                 if(userOne == true)
-                {
 
-                    view?.findNavController()?.navigate(R.id.action_login_to_hospitalPage)
+                    {
 
-                }
-                else
-                {
-                    Toast.makeText(activity, "Unregistered user, or incorrect", Toast.LENGTH_SHORT).show()
+                        view?.findNavController()?.navigate(R.id.action_login_to_hospitalPage)
+
+                    }
+                        else
+                    {
+                        Toast.makeText(activity, "Unregistered user, or incorrect", Toast.LENGTH_SHORT).show()
                 }
             }
             else{
