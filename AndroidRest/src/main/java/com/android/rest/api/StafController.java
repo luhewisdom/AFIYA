@@ -73,7 +73,7 @@ public class StafController {
     }
 
     @GetMapping("/appointments/ordered/card")
-    public CardModel seeAppointment (@RequestParam("cardno") String cardno)
+    public CardModel seeAppointment (@AuthenticationPrincipal User user,@RequestParam("cardno") String cardno)
     {
         return CardModel.getCardModel(cardService.findByCardNo(cardno));
     }
@@ -108,7 +108,7 @@ public class StafController {
     }
     @PostMapping(path = "/report",consumes="application/json")
     @ResponseStatus(HttpStatus.CREATED)
-    public ReportModel createHospital(@RequestBody Report report,@RequestParam("username")String username,  @AuthenticationPrincipal User user) {
+    public ReportModel createReport(@RequestBody Report report,@RequestParam("username")String username,  @AuthenticationPrincipal User user) {
         User user1 = userService.findUserByUsername(username);
         Hospital hospital = hospitalService.findByUser(user);
 
