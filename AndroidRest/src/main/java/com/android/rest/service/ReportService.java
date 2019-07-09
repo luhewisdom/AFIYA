@@ -1,5 +1,6 @@
 package com.android.rest.service;
 
+import com.android.rest.domain.Hospital;
 import com.android.rest.domain.Report;
 import com.android.rest.domain.User;
 import org.springframework.data.domain.Sort;
@@ -23,6 +24,10 @@ public interface ReportService {
 
     List<Report> findByUser(User user);
     //Page<Report> findAll(Pageable pageable);
+
+    Report findByReportNO(String rno);
+
+    List<Report> findByHospital(Hospital hospital);
 
     long count();
 

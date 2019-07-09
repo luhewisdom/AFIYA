@@ -4,6 +4,7 @@ package com.android.rest.api;
 import com.android.rest.configrations.JWT.JwtTokenProvider;
 import com.android.rest.domain.Role;
 import com.android.rest.domain.User;
+import com.android.rest.domain.UserModel;
 import com.android.rest.service.RoleService;
 import com.android.rest.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,7 @@ import static org.springframework.http.ResponseEntity.ok;
 
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping(path="/user",produces="application/json")
 @CrossOrigin(origins="*")
 public class UserController {
 	
@@ -44,12 +45,15 @@ public class UserController {
 
 
 
-    @GetMapping("/users/{id}")
-    public User findOneUser(@PathVariable("id")Long id)
+    @GetMapping("/users/{username}")
+    public UserModel findOneUser(@PathVariable("username")String username)
     {
-        return findOneUser(id);
+        return UserModel.getUserModel(userService.findUserByUsername(username));
     }
 
+
+
+    /////////////////////////////////////////////////////////////////
     @PostMapping(path = "/staff/register",consumes="application/json")
     @ResponseStatus(HttpStatus.CREATED)
     public void registerHospitalUser(@Valid @RequestBody User user,@RequestParam(defaultValue = "STAFF") String level)

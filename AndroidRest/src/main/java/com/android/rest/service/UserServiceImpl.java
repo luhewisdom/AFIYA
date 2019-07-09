@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Optional;
 
 
 @Service
@@ -69,4 +70,32 @@ public class UserServiceImpl implements UserService{
 	public Iterable<User> findAll() {
 		return userRepository.findAll();
 	}
+
+    @Override
+    public Optional<User> findById(Long id) {
+        return userRepository.findById(id);
+    }
+
+    @Override
+    public boolean existsById(Long id) {
+        return false;
+    }
+
+
+
+    @Override
+    public Iterable<User> findAllById(Iterable<Long> ids) {
+        return userRepository.findAllById(ids);
+    }
+
+
+
+    @Override
+    public void deleteById(Long id) {
+            userRepository.deleteById(id);
+    }
+
+
+
+
 }

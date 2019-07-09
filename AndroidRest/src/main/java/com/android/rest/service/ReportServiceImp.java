@@ -1,5 +1,6 @@
 package com.android.rest.service;
 
+import com.android.rest.domain.Hospital;
 import com.android.rest.domain.Report;
 import com.android.rest.domain.User;
 import com.android.rest.repository.ReportRepo;
@@ -52,6 +53,16 @@ public class ReportServiceImp implements ReportService {
     @Override
     public List<Report> findByUser(User user) {
         return reportRepo.findByUser(user);
+    }
+
+    @Override
+    public Report findByReportNO(String rno) {
+        return reportRepo.findByReportNO(rno);
+    }
+
+    @Override
+    public List<Report> findByHospital(Hospital hospital) {
+        return reportRepo.findByHospital(hospital);
     }
 
 

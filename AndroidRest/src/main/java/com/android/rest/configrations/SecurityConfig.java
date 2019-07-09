@@ -17,9 +17,12 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+
+import javax.servlet.http.HttpServletResponse;
 
 @Configuration
 @EnableWebSecurity
@@ -37,13 +40,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	private CustomAccessDeniedHandler accessDeniedHandler;
 
 
-	@Autowired
-	private RestAuthenticationEntryPoint restAuthenticationEntryPoint;
 
-	@Autowired
-	private MySavedRequestAwareAuthenticationSuccessHandler mySuccessHandler;
-
-	private SimpleUrlAuthenticationFailureHandler myFailureHandler = new SimpleUrlAuthenticationFailureHandler();
 
 	@Autowired
 	private UserDetailsService userDetailsService;
@@ -64,13 +61,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 				 .sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
 				 .authorizeRequests()
 				 .antMatchers("/hospital/**").permitAll()
-				 .antMatchers("/user/**").hasAuthority("SUPER")
 				 .antMatchers("/staff/**").hasAuthority("STAFF")
+				 .antMatchers("/user/**").hasAuthority("SUPER")
 				 .antMatchers("/appoint/**").hasAuthority("client")
 				 .and()
-				 .exceptionHandling()
-				 .authenticationEntryPoint(restAuthenticationEntryPoint)
+				 .exceptionHandling().authenticationEntryPoint(unauthorizedEntryPoint())
+				 .accessDeniedHandler(accessDeniedHandler)
 				 .and()
+				 .csrf().disable()
 				 .logout()
 				 .logoutSuccessHandler(logoutSuccessHandler())
 				 .and()
@@ -92,6 +90,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	@Bean
 	public LogoutSuccessHandler logoutSuccessHandler() {
 		return new CustomLogoutSuccessHandler();
+	}
+	@Bean
+	public AuthenticationEntryPoint unauthorizedEntryPoint() {
+		return (request, response, authException) -> response.sendError(HttpServletResponse.SC_UNAUTHORIZED,
+				"Unauthorized");
 	}
 	 
 }

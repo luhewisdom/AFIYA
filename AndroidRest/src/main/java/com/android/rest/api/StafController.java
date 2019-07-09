@@ -9,6 +9,7 @@ import com.android.rest.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.EmptyStackException;
@@ -48,13 +49,6 @@ public class StafController {
         hospital.setUser(user);
         return HospitalModel.getHospitalModel(hospitalService.save(hospital));
     }
-
-    @PutMapping(path = "/updateHospital/{id}",consumes = "application/json")
-    public HospitalModel updateHospital(@PathVariable("id") Long id, @RequestParam Hospital hospital)
-    {
-        return HospitalModel.getHospitalModel(hospitalService.save(hospital));
-    }
-
     @DeleteMapping(path = "/deleteHospital/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteHospital(@PathVariable("id") Long id) {
@@ -64,41 +58,42 @@ public class StafController {
 
         }
     }
-
-
-    @GetMapping("/appointments")
-    public Iterable<CardModel> seeAppointments (@AuthenticationPrincipal User user)
-    {
-        return CardModel.getCardModel((List<Card>) cardService.findByHospitalUser(user));
-    }
-
     @GetMapping("/appointments/ordered/card")
     public CardModel seeAppointment (@AuthenticationPrincipal User user,@RequestParam("cardno") String cardno)
     {
         return CardModel.getCardModel(cardService.findByCardNo(cardno));
     }
-
+    @GetMapping("/appointments")
+    public Iterable<CardModel> seeAppointments (@AuthenticationPrincipal User user)
+    {
+        return CardModel.getCardModel((List<Card>) cardService.findByHospitalUser(user));
+    }
     @GetMapping("/appointments/ordered")
     public Iterable<CardModel> seeInOrder ()
     {
         return CardModel.getCardModel((List<Card>) cardService.findByDateOrderByAsc());
     }
+    /////////////////////////////////
+
+    @GetMapping("/appoint/myappoints/one")
+    public CardModel oneCard(@AuthenticationPrincipal UserDetails userDetails, @PathVariable("cno") String cno){
+        return CardModel.getCardModel(cardService.findByCardNo(cno));
+    }
     @PatchMapping(path = "approve/{id}", consumes = "application/json")
     public CardModel updateAppointment (@PathVariable("id") Long id,
-                                   @RequestParam("approve") boolean approve,
-                                   @RequestParam("desc") String desc,
-                                   @AuthenticationPrincipal User user)
+                                        @RequestParam("approve") boolean approve,
+                                        @RequestParam("desc") String desc,
+                                        @AuthenticationPrincipal User user)
     {
         Card card = cardService.findById(id).get();
         card.setApproved(approve);
         card.setDescription(desc);
         return CardModel.getCardModel(cardService.save(card));
     }
-
     @DeleteMapping(path = "/appointment/delete")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteAppointment (@RequestParam("id") Long id,@AuthenticationPrincipal
-                                       User user)
+            User user)
     {
         try {
             cardService.deleteById(id);
@@ -106,6 +101,19 @@ public class StafController {
 
         }
     }
+
+    @GetMapping("/reports")
+    public List<ReportModel> hospitalReport(@RequestParam("hospital")String hname,@AuthenticationPrincipal User user)
+    {
+        Hospital hospital = hospitalService.findByHname(hname);
+        return ReportModel.getReportModels(reportService.findByHospital(hospital));
+    }
+
+    @GetMapping("/appoint/reports/one")
+    public ReportModel oneReport(@AuthenticationPrincipal UserDetails userDetails,@PathVariable("rno") String rno){
+        return ReportModel.getReportModel(reportService.findByReportNO(rno));
+    }
+
     @PostMapping(path = "/report",consumes="application/json")
     @ResponseStatus(HttpStatus.CREATED)
     public ReportModel createReport(@RequestBody Report report,@RequestParam("username")String username,  @AuthenticationPrincipal User user) {
@@ -116,6 +124,18 @@ public class StafController {
         report.setUser(user1);
         return ReportModel.getReportModel(reportService.save(report));
     }
+
+    //////////////////////////
+    @PutMapping(path = "/updateHospital/{id}",consumes = "application/json")
+    public HospitalModel updateHospital(@PathVariable("id") Long id, @RequestParam Hospital hospital)
+    {
+        return HospitalModel.getHospitalModel(hospitalService.save(hospital));
+    }
+
+    /////////////////////////////////////////
+
+
+
 
 }
 

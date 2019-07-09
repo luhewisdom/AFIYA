@@ -37,30 +37,17 @@ public class CardController {
     }
 
 
-    @GetMapping("/appoint/myappoint")
+    @GetMapping("/appoint/myappoints")
     public List<CardModel>  cardList(@AuthenticationPrincipal UserDetails userDetails){
         User user = userService.findUserByUsername(userDetails.getUsername());
         return  CardModel.getCardModel(cardService.findByUserId(user.getId()));
     }
-
-
-    @PostMapping(path = "/appoint",consumes="application/json")
-    @ResponseStatus(HttpStatus.CREATED)
-    public CardModel setAppointment(@Valid  @RequestBody Card card,
-                                    @AuthenticationPrincipal User user,
-                                    @RequestParam String hospital)
-    {
-        Hospital hos = hospitalService.findByHname(hospital);
-        if(hos == null){
-            return null;
-        }
-
-        card.setUser(user);
-        card.setHospital(hos);
-        return  CardModel.getCardModel(cardService.save(card));
+    @GetMapping("/appoint/myappoints/one")
+    public CardModel oneCard(@AuthenticationPrincipal UserDetails userDetails,@PathVariable("cno") String cno){
+        return CardModel.getCardModel(cardService.findByCardNo(cno));
     }
 
-    @GetMapping("/appoint/report")
+    @GetMapping("/appoint/reports")
     public ResponseEntity<List<ReportModel>> getReport(@AuthenticationPrincipal UserDetails userDetails)
     {
         User user1 = userService.findUserByUsername(userDetails.getUsername());
@@ -71,6 +58,26 @@ public class CardController {
         }
 
         return new ResponseEntity<>(ReportModel.getReportModels(reports),HttpStatus.OK);
+    }
+    @GetMapping("/appoint/reports/one")
+    public ReportModel oneReport(@AuthenticationPrincipal UserDetails userDetails,@PathVariable("rno") String rno){
+        return ReportModel.getReportModel(reportService.findByReportNO(rno));
+    }
+    //////////////////////////////////////////
+    @PostMapping(path = "/appoint",consumes="application/json")
+    @ResponseStatus(HttpStatus.CREATED)
+    public CardModel setAppointment(@Valid  @RequestBody Card card,
+                                    @AuthenticationPrincipal User user,
+                                    @RequestParam String hospital)
+    {
+        Hospital hos = hospitalService.findByHname(hospital);
+        if(hos == null){
+            return null;
+        }
+        card.setUser(user);
+        card.setHospital(hos);
+        card.setApproved(false);
+        return  CardModel.getCardModel(cardService.save(card));
     }
 
 }

@@ -1,6 +1,7 @@
 package com.android.rest.service;
 
 
+import com.android.rest.domain.Report;
 import com.android.rest.domain.Role;
 
 import java.util.Optional;
@@ -31,4 +32,6 @@ public interface RoleService {
 	void deleteAll(Iterable<Role> roles);
 
 	void deleteAll();
+
+
 }

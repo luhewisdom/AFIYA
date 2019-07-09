@@ -4,6 +4,7 @@ package com.android.rest.api;
 import com.android.rest.configrations.JWT.JwtTokenProvider;
 import com.android.rest.domain.Hospital;
 import com.android.rest.domain.HospitalModel;
+import com.android.rest.domain.LoginResponse;
 import com.android.rest.domain.User;
 import com.android.rest.service.HospitalService;
 import com.android.rest.service.UserService;
