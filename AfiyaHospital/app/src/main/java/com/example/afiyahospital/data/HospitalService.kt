@@ -9,7 +9,7 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 
 interface HospitalService {
-    @GET
+    @GET("/")
     fun getHospitals():Deferred<Response<List<Hospital>>>
 
     @GET("hospital/hospitals")

@@ -43,7 +43,13 @@ class SignUp : Fragment() {
         userViewModel = ViewModelProviders.of(this).get(UserViewModel::class.java)
         val activity: MainActivity = activity as MainActivity
         registerButton.setOnClickListener {
-            val user = User(userNameEditText.text.toString(),emailEditText.text.toString(),passwordEditText.text.toString())
+            val user = User(userNameEditText.text.toString(),
+                emailEditText.text.toString(),
+                passwordEditText.text.toString(),
+                userNameEditText.text.toString(),
+                userNameEditText.text.toString(),
+                userNameEditText.text.toString(),
+                userNameEditText.text.toString())
             if (!emptyValidation())
             {
                 AsyncTask.execute{
@@ -51,7 +57,7 @@ class SignUp : Fragment() {
                 }
 
                 view?.findNavController()?.navigate(R.id.action_signUp_to_login)
-                Toast.makeText(activity,user.userName +" registered",Toast.LENGTH_LONG).show()
+                Toast.makeText(activity,user.username +" registered",Toast.LENGTH_LONG).show()
             }
             else
             {

@@ -10,7 +10,10 @@ interface UserDao {
     @Query("SELECT * from user ORDER BY userName ASC")
     fun getAllUsers():LiveData<List<User>>
 
-    @Query("SELECT * FROM User Where userName=:uname and password =:pass")
+    @Query("SELECT * from user where username=:uname")
+    fun getAllUsers(uname: String):LiveData<User>
+
+    @Query("SELECT * FROM user Where userName=:uname and password =:pass")
     fun getUser(uname:String,pass:String):Boolean
 
     @Insert

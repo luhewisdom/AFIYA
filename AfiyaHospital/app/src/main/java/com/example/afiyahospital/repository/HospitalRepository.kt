@@ -1,7 +1,7 @@
 package com.example.loginpage.repository
 
 import androidx.lifecycle.LiveData
-import com.example.loginpage.data.Hospital
+import com.example.afiyahospital.data.Hospital
 import com.example.loginpage.data.HospitalDao
 import com.example.loginpage.data.User
 

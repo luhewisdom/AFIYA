@@ -9,7 +9,7 @@ import java.io.Serializable
 
 @Entity(foreignKeys = arrayOf(
     ForeignKey(entity = Role::class,
-        parentColumns = arrayOf("role"),
+        parentColumns = arrayOf("id"),
         childColumns = arrayOf("role"),
         onDelete = ForeignKey.NO_ACTION)
 ))

@@ -6,7 +6,7 @@ import java.io.Serializable
 import java.util.*
 
 
-@Entity
+@Entity(tableName = "card")
 data class Card(
     @PrimaryKey(autoGenerate = true)val id:Long,
     val cardNo:String,

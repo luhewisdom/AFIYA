@@ -2,17 +2,18 @@ package com.example.loginpage.data
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
+import com.example.afiyahospital.data.Hospital
 
 @Dao
 interface HospitalDao {
 
-    @Query("SELECT * from hospital ORDER BY name ASC")
+    @Query("SELECT * from hospital ORDER BY hname ASC")
     fun getAllHospital(): LiveData<List<Hospital>>
 
-    @Query("SELECT * FROM hospital Where name=:hname")
+    @Query("SELECT * FROM hospital Where hname=:hname")
     fun getHospital(hname:String):LiveData<Hospital>
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertHospital(hospital: Hospital):Long
 
     @Update
@@ -20,6 +21,4 @@ interface HospitalDao {
 
     @Delete
     fun deleteHospital(hospital: Hospital):Int
-
-
 }
