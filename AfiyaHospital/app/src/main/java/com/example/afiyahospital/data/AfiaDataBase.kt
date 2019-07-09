@@ -5,10 +5,17 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
+import com.example.afiyahospital.data.Card
+import com.example.afiyahospital.data.Hospital
+import com.example.afiyahospital.data.Report
 import kotlinx.coroutines.CoroutineScope
 
 
-@Database(entities = arrayOf(User::class,Hospital::class),version = 3)
+@Database(entities = arrayOf(User::class,
+                    Hospital::class,
+                    Report::class,
+                    Card::class
+                    ),version = 4)
 abstract class AfiaDataBase:RoomDatabase() {
     abstract fun userDao():UserDao
     abstract fun hospitalDao():HospitalDao
@@ -17,8 +24,8 @@ abstract class AfiaDataBase:RoomDatabase() {
     companion object {
         @Volatile
         private var INSTANCE: AfiaDataBase? = null
-
-        fun getDatabase(context: Context, scope:CoroutineScope):AfiaDataBase {
+///, scope:CoroutineScope
+        fun getDatabase(context: Context):AfiaDataBase {
 
             val tempInstance = INSTANCE
             if (tempInstance != null) {
@@ -30,7 +37,7 @@ abstract class AfiaDataBase:RoomDatabase() {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     AfiaDataBase::class.java, "afia_database"
-                ).build()
+                ).fallbackToDestructiveMigration().build()
 
                 INSTANCE = instance
                 return instance

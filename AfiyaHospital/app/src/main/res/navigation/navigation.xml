@@ -1,17 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/navigation" app:startDestination="@id/login">
+            xmlns:tools="http://schemas.android.com/tools" android:id="@+id/navigation" app:startDestination="@id/login">
 
     <fragment android:id="@+id/login" android:name="com.example.loginpage.Login" android:label="Login">
         <action android:id="@+id/action_login_to_signUp" app:destination="@id/signUp" app:enterAnim="@anim/fad_in"
                 app:exitAnim="@anim/fade_out" app:popEnterAnim="@anim/slide_in_left"
                 app:popExitAnim="@anim/slide_in_right"/>
-        <action android:id="@+id/action_login_to_hospitalPage" app:destination="@id/hospitalPage"/>
+        <action android:id="@+id/action_login_to_superFragment2" app:destination="@id/superFragment"/>
+        <action android:id="@+id/action_login_to_appointmentsFragment" app:destination="@id/appointmentsFragment"/>
+        <action android:id="@+id/action_login_to_mapFragment" app:destination="@id/mapFragment"/>
+        <action android:id="@+id/action_login_to_oneHospital" app:destination="@id/oneHospital"/>
     </fragment>
     <fragment android:id="@+id/signUp" android:name="com.example.loginpage.SignUp" android:label="SignUp">
         <action android:id="@+id/action_signUp_to_login" app:destination="@id/login"/>
     </fragment>
     <fragment android:id="@+id/hospitalPage" android:name="com.example.loginpage.HospitalPage"
-              android:label="HospitalPage"/>
+              android:label="HospitalPage">
+        <action android:id="@+id/action_hospitalPage_to_setAppointmnetFragment"
+                app:destination="@id/setAppointmnetFragment"/>
+        <action android:id="@+id/action_hospitalPage_to_checkReport" app:destination="@id/checkReport"/>
+    </fragment>
+    <fragment android:id="@+id/createHospital" android:name="com.example.afiyahospital.CreateHospital"
+              android:label="fragment_create_hospital" tools:layout="@layout/fragment_create_hospital"/>
+    <fragment android:id="@+id/superFragment" android:name="com.example.afiyahospital.SuperFragment"
+              android:label="fragment_super" tools:layout="@layout/fragment_super">
+        <action android:id="@+id/action_superFragment_to_userFragment" app:destination="@id/userFragment"/>
+    </fragment>
+    <fragment android:id="@+id/userFragment" android:name="com.example.afiyahospital.UserFragment"
+              android:label="UserFragment"/>
+    <fragment android:id="@+id/appointmentsFragment" android:name="com.example.afiyahospital.AppointmentsFragment"
+              android:label="AppointmentsFragment">
+        <action android:id="@+id/action_appointmentsFragment_to_createHospital" app:destination="@id/createHospital"/>
+        <action android:id="@+id/action_appointmentsFragment_to_appointmentFragment"
+                app:destination="@id/appointmentFragment"/>
+    </fragment>
+    <fragment android:id="@+id/appointmentFragment" android:name="com.example.afiyahospital.AppointmentFragment"
+              android:label="AppointmentFragment"/>
+    <fragment android:id="@+id/setAppointmnetFragment" android:name="com.example.afiyahospital.SetAppointmnetFragment"
+              android:label="SetAppointmnetFragment"/>
+    <fragment android:id="@+id/checkReport" android:name="com.example.afiyahospital.CheckReport"
+              android:label="CheckReport"/>
+    <fragment android:id="@+id/mapFragment" android:name="com.example.afiyahospital.MapFragment"
+              android:label="MapFragment"/>
+    <fragment android:id="@+id/oneHospital" android:name="com.example.afiyahospital.OneHospital"
+              android:label="fragment_one_hospital" tools:layout="@layout/fragment_hospital"/>
 </navigation>

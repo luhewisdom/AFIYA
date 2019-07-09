@@ -7,8 +7,9 @@ import androidx.databinding.library.baseAdapters.BR.hospital
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.afiyahospital.data.Hospital
 import com.example.afiyahospital.databinding.ListItemHospitalBinding
-import com.example.loginpage.data.Hospital
+
 
 class HospitalAdapter: ListAdapter<Hospital, HospitalAdapter.ViewHolder>(HospitalDiffCallback()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -28,7 +29,7 @@ class HospitalAdapter: ListAdapter<Hospital, HospitalAdapter.ViewHolder>(Hospita
 
         fun bind(listener: View.OnClickListener, item: Hospital) {
             binding.apply {
-                hospital = item
+                //hospital = item
                 executePendingBindings()
             }
         }

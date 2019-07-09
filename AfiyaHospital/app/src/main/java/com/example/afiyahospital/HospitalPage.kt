@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.get
 
 import com.example.afiyahospital.adapter.HospitalAdapter
 import com.example.afiyahospital.databinding.FragmentUserPageBinding
@@ -16,7 +17,7 @@ import com.example.loginpage.viewmodel.UserViewModel
 
 class HospitalPage : Fragment() {
 
-    private lateinit var  viewModel:HospitalAdapter
+    private lateinit var  viewModel:HospitalViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -26,6 +27,8 @@ class HospitalPage : Fragment() {
         context ?: return binding.root
         val adapter = HospitalAdapter()
         binding.hospitalList.adapter = adapter
+        viewModel = ViewModelProviders.of(this).get(HospitalViewModel::class.java)
+        binding.setLifecycleOwner(this)
         return binding.root
     }
 }

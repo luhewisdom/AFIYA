@@ -5,16 +5,15 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.afiyahospital.data.HospitalApiData
-import com.example.afiyahospital.data.HospitalApiService
+import com.example.afiyahospital.data.HospitalService
 import com.example.afiyahospital.repository.HospitalApiRepository
-import com.example.loginpage.repository.HospitalRepository
 import kotlinx.coroutines.launch
 import retrofit2.Response
 
 class HospitalApiViewModel:ViewModel() {
     private val hospitalApiRepository:HospitalApiRepository
     init {
-        val hospitalApiService = HospitalApiService.getInstance()
+        val hospitalApiService = HospitalService.getInstance()
         hospitalApiRepository = HospitalApiRepository(hospitalApiService)
     }
 
