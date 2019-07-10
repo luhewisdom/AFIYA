@@ -1,16 +1,15 @@
-package com.example.afiyahospital.Network
+package com.example.afiyahospital.network
 
-import androidx.room.PrimaryKey
-import com.example.afiyahospital.data.Card
+
 import com.example.afiyahospital.data.Hospital
 import com.squareup.moshi.JsonClass
-import java.util.*
+
 
 
 
 
 @JsonClass(generateAdapter = true)
-data class NetworkHospital(
+data class NetworkHospital (
     val id:Long,
     val hname:String,
     val image:String,
@@ -22,9 +21,27 @@ data class NetworkHospital(
     val user:String
 )
 
+@JsonClass(generateAdapter = true)
+data class NetworkHospitals(val hospitals: List<NetworkHospital>)
+
 fun NetworkHospital.asDatabaseModel(): Hospital {
     return Hospital(id = id, hname = hname,image = image,owendby = owendby,phoneNumbe =phoneNumbe
     ,relativeAdress = relativeAdress,latitude = latitude,longtuide = longtuide,user = user)
+}
+fun NetworkHospitals.asDatabaseModel(): List<Hospital> {
+    return hospitals.map {
+        Hospital(
+            id = it.id,
+            hname = it.hname,
+            image = it.image,
+            owendby = it.owendby,
+            phoneNumbe = it.phoneNumbe,
+            relativeAdress = it.relativeAdress,
+            latitude = it.latitude,
+            longtuide = it.longtuide,
+            user = it.user
+            )
+    }
 }
 
 

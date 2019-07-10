@@ -5,6 +5,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.afiyahospital.data.Hospital
+import com.example.afiyahospital.repository.HospitalRepository
 import com.example.loginpage.data.AfiaDataBase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job

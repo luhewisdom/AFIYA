@@ -2,24 +2,28 @@ package com.example.afiyahospital.repository
 
 import androidx.lifecycle.LiveData
 import com.example.afiyahospital.data.Hospital
-import com.example.afiyahospital.Network.HospitalService
+import com.example.afiyahospital.network.HospitalService
+import com.example.afiyahospital.network.asDatabaseModel
 import com.example.loginpage.data.HospitalDao
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import retrofit2.Response
 
-class HospitalRepository(private val hospitalService: HospitalService,
-                         private val hospitalDao: HospitalDao) {
-    suspend fun getAllHospitals():Response<List<Hospital>> =
-        withContext(Dispatchers.IO)
-        {
-            hospitalService.getAllHospitals().await()
+class HospitalRepository(private val hospitalDao: HospitalDao) {
+    lateinit var  hospitalService:HospitalService
+    suspend fun refershHospital(){
+        withContext(Dispatchers.IO){
+
+            val hospitals =hospitalService.getAllHospitals().await()
+
+            hospitalDao.insertAll(hospitals.asDatabaseModel())
         }
-    suspend fun getOneHospital(id:Long):Response<Hospital> =
-        withContext(Dispatchers.IO)
-        {
-           hospitalService.getOneHospital(id).await()
-        }
+    }
+    val allHospitals : LiveData<List<Hospital>> = hospitalDao.getAllHospital()
+
+
+
+
+    ////////////////////////////////////////////////
     fun allHospital(): LiveData<List<Hospital>> = hospitalDao.getAllHospital()
 
     fun oneHospital(hname:String): LiveData<Hospital> {
@@ -39,4 +43,5 @@ class HospitalRepository(private val hospitalService: HospitalService,
 
         return hospitalDao.deleteHospital(hospital)
     }
+    /////////////////////////////////////////////////////
 }

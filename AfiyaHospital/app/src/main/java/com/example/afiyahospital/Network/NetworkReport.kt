@@ -1,5 +1,6 @@
-package com.example.afiyahospital.Network
+package com.example.afiyahospital.network
 
+import com.example.afiyahospital.data.Report
 import com.squareup.moshi.JsonClass
 import java.util.*
 
@@ -14,3 +15,9 @@ data class NetworkReport(
     val user :String,
     val hospital :String
 )
+
+fun NetworkReport.asDatabaseModel():Report {
+    return Report(id = id, reportDate = reportDate,bloodTesst = bloodTesst,urinTest = urinTest
+    ,otherTest = otherTest,reportNo = reportNo,user = user,hospital = hospital)
+}
+

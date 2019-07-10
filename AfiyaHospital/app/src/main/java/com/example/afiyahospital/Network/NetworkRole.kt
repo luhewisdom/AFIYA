@@ -1,6 +1,5 @@
-package com.example.afiyahospital.Network
+package com.example.afiyahospital.network
 
-import com.example.afiyahospital.data.Card
 import com.example.afiyahospital.data.Role
 import com.squareup.moshi.JsonClass
 

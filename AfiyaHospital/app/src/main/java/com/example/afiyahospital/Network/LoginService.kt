@@ -1,10 +1,9 @@
-package com.example.afiyahospital.Network
+package com.example.afiyahospital.network
 
 import com.example.afiyahospital.Utilits.API_CONNECT_TIMEOUT
 import com.example.afiyahospital.Utilits.API_READ_TIMEOUT
 import com.example.afiyahospital.Utilits.BASE_URL
 import com.example.afiyahospital.data.LoginResponse
-import com.example.loginpage.data.User
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import kotlinx.coroutines.Deferred
 import okhttp3.OkHttpClient

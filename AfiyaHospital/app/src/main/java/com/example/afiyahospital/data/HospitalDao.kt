@@ -14,6 +14,9 @@ interface HospitalDao {
     fun getHospital(hname:String):LiveData<Hospital>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertAll( hospials: List<Hospital>)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertHospital(hospital: Hospital):Long
 
     @Update
