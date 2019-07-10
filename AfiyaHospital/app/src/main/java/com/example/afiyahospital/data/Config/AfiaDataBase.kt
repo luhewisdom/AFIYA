@@ -15,12 +15,14 @@ import kotlinx.coroutines.CoroutineScope
                     Report::class,
                     Role::class,
                     Card::class
-                    ),version = 7)
+                    ), exportSchema = false,version = 7)
 @TypeConverters(DateConverter::class)
 abstract class AfiaDataBase:RoomDatabase() {
     abstract fun userDao():UserDao
     abstract fun hospitalDao():HospitalDao
-
+    abstract fun roleDao():RoleDao
+    abstract fun reportDao():ReportDao
+    abstract fun cardDao():CardDao
 
     companion object {
         @Volatile

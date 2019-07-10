@@ -9,14 +9,14 @@ interface RoleDao {
     @Query("SELECT * from role ORDER BY role ASC")
     fun getAllCard(): LiveData<List<Role>>
 
-    @Query("SELECT * FROM role Where role=:role")
-    fun getCardByNo(role : String): LiveData<Role>
+    @Query("SELECT * FROM role Where role=:ro")
+    fun getCardByNo(ro : String): LiveData<Role>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertHospital(role: String):Long
+    fun insertHospital(role: Role):Long
 
     @Update
-    fun update(role: String):Int
+    fun update(role: Role):Int
 
     @Query("Delete from role where id =:rno")
     fun deleteHospital(rno:Long):Int

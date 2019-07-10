@@ -1,11 +1,25 @@
-package com.example.loginpage.repository
+package com.example.afiyahospital.repository
 
 import androidx.lifecycle.LiveData
 import com.example.afiyahospital.data.Hospital
+import com.example.afiyahospital.Network.HospitalService
 import com.example.loginpage.data.HospitalDao
-import com.example.loginpage.data.User
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import retrofit2.Response
 
-class HospitalRepository(private val hospitalDao: HospitalDao) {
+class HospitalRepository(private val hospitalService: HospitalService,
+                         private val hospitalDao: HospitalDao) {
+    suspend fun getAllHospitals():Response<List<Hospital>> =
+        withContext(Dispatchers.IO)
+        {
+            hospitalService.getAllHospitals().await()
+        }
+    suspend fun getOneHospital(id:Long):Response<Hospital> =
+        withContext(Dispatchers.IO)
+        {
+           hospitalService.getOneHospital(id).await()
+        }
     fun allHospital(): LiveData<List<Hospital>> = hospitalDao.getAllHospital()
 
     fun oneHospital(hname:String): LiveData<Hospital> {

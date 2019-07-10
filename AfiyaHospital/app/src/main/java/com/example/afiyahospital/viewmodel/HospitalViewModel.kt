@@ -2,15 +2,10 @@ package com.example.loginpage.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.afiyahospital.data.Hospital
 import com.example.loginpage.data.AfiaDataBase
-import com.example.loginpage.data.HospitalDao
-import com.example.loginpage.data.User
-import com.example.loginpage.repository.HospitalRepository
-import com.example.loginpage.repository.UserRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
