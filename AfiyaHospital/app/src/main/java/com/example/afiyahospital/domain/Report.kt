@@ -16,5 +16,4 @@ data class Report(
     val user :String,
     val hospital :String
     ): Serializable {
-
 }

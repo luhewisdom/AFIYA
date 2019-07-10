@@ -43,6 +43,3 @@ fun NetworkHospitals.asDatabaseModel(): List<Hospital> {
             )
     }
 }
-
-
-

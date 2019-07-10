@@ -20,8 +20,20 @@ class HospitalRepository(private val hospitalDao: HospitalDao) {
     }
     val allHospitals : LiveData<List<Hospital>> = hospitalDao.getAllHospital()
 
+    suspend fun refreshOneHospital(id:Long){
+        withContext(Dispatchers.IO){
+            val oneHospital = hospitalService.getOneHospital(id).await()
+            hospitalDao.insertHospital(oneHospital.asDatabaseModel())
+        }
+    }
+    suspend fun refereshHospitals(){
+        withContext(Dispatchers.IO){
 
+            val hospitals =hospitalService.getHospitals().await()
 
+            hospitalDao.insertAll(hospitals.asDatabaseModel())
+        }
+    }
 
     ////////////////////////////////////////////////
     fun allHospital(): LiveData<List<Hospital>> = hospitalDao.getAllHospital()
@@ -29,8 +41,6 @@ class HospitalRepository(private val hospitalDao: HospitalDao) {
     fun oneHospital(hname:String): LiveData<Hospital> {
         return hospitalDao.getHospital(hname)
     }
-
-
     fun insertHospital(hospital: Hospital):Long{
         return hospitalDao.insertHospital(hospital)
     }
