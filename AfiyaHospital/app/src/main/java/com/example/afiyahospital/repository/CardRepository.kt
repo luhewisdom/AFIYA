@@ -37,6 +37,18 @@ class   CardRepository constructor(private val cardDao: CardDao, private val  ca
             }
             return@withContext  cardDao.getAllCard()
         }
+    suspend fun setAppointment(card: Card,hname :String,token: String) =
+        withContext(Dispatchers.IO){
+            val card =cardService.setAppoiintment(card,hname,token)
+            cardDao.insertCard(card as Card)
+            cardDao.getAllCard()
+        }
+    suspend fun getAppointment(token: String) =
+        withContext(Dispatchers.IO){
+            val cards = cardService.getAllAppoint().await() as List<Card>
+            cardDao.insertAll(cards)
+            cardDao.getAllCard()
+        }
 
 
     ////////////////////////////////////////////////

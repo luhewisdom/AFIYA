@@ -13,10 +13,8 @@ class HospitalRepository  constructor(private val hospitalDao: HospitalDao,priva
     suspend fun refershHospital()=
         withContext(Dispatchers.IO){
             val hospitals =hospitalService.getAllHospitals().await().body()
-
-            if (hospitals != null) {
-                hospitalDao.insertAll(hospitals.asDatabaseModel())
-            }
+                hospitalDao.insertAll(hospitals as List<Hospital>)
+            return@withContext hospitalDao.getAllHospital()
         }
 
     //val allHospitals : LiveData<List<Hospital>> = hospitalDao.getAllHospital()

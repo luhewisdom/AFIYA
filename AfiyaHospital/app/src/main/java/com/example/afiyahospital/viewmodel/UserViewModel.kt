@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
+import com.example.afiyahospital.network.UserService
 import com.example.loginpage.data.AfiaDataBase
 import com.example.loginpage.data.User
 import com.example.loginpage.repository.UserRepository
@@ -15,7 +16,8 @@ class UserViewModel(application:Application):AndroidViewModel(application) {
     val allUsers:LiveData<List<User>>
     init {
         val afiaDao = AfiaDataBase.getDatabase(application).userDao()
-        userRepository = UserRepository(afiaDao)
+        val roleDao = AfiaDataBase.getDatabase(application).roleDao()
+        userRepository = UserRepository(afiaDao,userService = UserService.getInstance(),roleDao = roleDao)
         allUsers = userRepository.allUser()
 
     }
@@ -30,5 +32,4 @@ class UserViewModel(application:Application):AndroidViewModel(application) {
     fun deleteUser(user: User) = viewModelScope.launch(Dispatchers.IO) {
         userRepository.deleteUser(user)
     }
-
 }

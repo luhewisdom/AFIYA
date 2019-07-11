@@ -16,7 +16,7 @@ import java.util.concurrent.TimeUnit
 interface StaffService {
 
     @POST("staff/registerHospital")
-    fun  registerHospital(@Body hospital: Hospital) : Deferred<Response<NetworkHospital>>
+    fun  registerHospital(@Body hospital: Hospital,@Header("Authorization") token:String) : Deferred<Response<NetworkHospital>>
 
 
     @GET("staff/appoint/myappoints/one/{cno}")
@@ -28,7 +28,7 @@ interface StaffService {
     @PATCH("staff/approve/{id}")
     fun  updateAppointment(@Path("id")id:Long,
                            @Path("approve")approve:Boolean,
-                           @Path("desc")desc:String):Deferred<Response<NetworkCard>>
+                           @Path("desc")desc:String,@Header("Authorization") token:String):Deferred<Response<NetworkCard>>
 
 
     @DELETE("staff/appointment/delete")

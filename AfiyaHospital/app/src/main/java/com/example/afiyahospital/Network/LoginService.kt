@@ -26,7 +26,7 @@ interface LoginService {
     fun getLogin(@Path("username") username:String, @Path("password") password:String): Deferred<Response<LoginResponse>>
 
     @POST("registerClient")
-    fun registerClient(@Body user:NetworkUser)
+    fun registerClient(@Body user:NetworkUser) : Deferred<Response<NetworkUser>>
 
 
     companion object {

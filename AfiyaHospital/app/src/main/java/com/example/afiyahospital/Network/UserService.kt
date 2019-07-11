@@ -3,6 +3,7 @@ package com.example.afiyahospital.network
 import com.example.afiyahospital.Utilits.API_CONNECT_TIMEOUT
 import com.example.afiyahospital.Utilits.API_READ_TIMEOUT
 import com.example.afiyahospital.Utilits.BASE_URL
+import com.example.afiyahospital.data.Role
 import com.example.loginpage.data.User
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import kotlinx.coroutines.Deferred
@@ -25,7 +26,7 @@ interface UserService {
     fun registerHospital(@Body user:NetworkUser,@Path("level")level:String,@Header("Authorization") token:String):Deferred<Response<NetworkUser>>
 
     @POST("/user/staaff/register/role")
-    fun registerRole(@Body role: NetworkRole,@Header("Authorization") token:String):Deferred<Response<Void>>
+    fun registerRole(@Body role: NetworkRole,@Header("Authorization") token:String):Deferred<Response<Role>>
 
 
 
