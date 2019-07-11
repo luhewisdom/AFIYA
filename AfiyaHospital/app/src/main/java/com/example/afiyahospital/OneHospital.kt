@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProviders
 import com.example.afiyahospital.databinding.FragmentHospitalBinding
+import com.example.afiyahospital.databinding.FragmentOneHospitalBinding
 import com.example.loginpage.viewmodel.HospitalViewModel
 
 
@@ -18,11 +19,8 @@ class OneHospital : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding   = FragmentHospitalBinding.inflate(inflater,container,false)
+        val binding   = FragmentOneHospitalBinding.inflate(inflater,container,false)
         context ?: return binding.root
-        viewmodel = ViewModelProviders.of(this).get(HospitalViewModel::class.java)
-
-        binding.hospitalViewModel  = viewmodel
         binding.setLifecycleOwner(this)
 
 

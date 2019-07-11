@@ -10,8 +10,8 @@ interface HospitalDao {
     @Query("SELECT * from hospital ORDER BY hname ASC")
     fun getAllHospital(): LiveData<List<Hospital>>
 
-    @Query("SELECT * FROM hospital Where hname=:hname")
-    fun getHospital(hname:String):LiveData<Hospital>
+    @Query("SELECT * FROM hospital Where id =:id")
+    fun getHospital(id:Long):LiveData<Hospital>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll( hospials: List<Hospital>)

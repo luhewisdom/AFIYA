@@ -20,10 +20,10 @@ interface StaffService {
 
 
     @GET("staff/appoint/myappoints/one/{cno}")
-    fun getOneAppoint(@Path("cno")cno:String): Deferred<Response<NetworkCard>>
+    fun getOneAppoint(@Path("cno")cno:String,@Header("Authorization") token:String): Deferred<Response<NetworkCard>>
 
     @GET("staff/appointments")
-    fun getHospitalAppointment(): Deferred<Response<NetworkCard>>
+    fun getHospitalAppointment(@Header("Authorization") token:String): Deferred<Response<NetworkCard>>
 
     @PATCH("staff/approve/{id}")
     fun  updateAppointment(@Path("id")id:Long,
@@ -32,30 +32,24 @@ interface StaffService {
 
 
     @DELETE("staff/appointment/delete")
-    fun delteAppointmetnt(@Path("id")id:Long):Deferred<Response<Void>>
+    fun delteAppointmetnt(@Path("id")id:Long,@Header("Authorization") token:String):Deferred<Response<Void>>
 
     @GET("staff/appoint/reports/one/{rno}")
-    fun getOneReport(@Path("rno") rno:String): Deferred<Response<NetworkReport>>
+    fun getOneReport(@Path("rno") rno:String,@Header("Authorization") token:String): Deferred<Response<NetworkReport>>
 
     @GET("staff/reports")
-    fun getRportForHospital(@Path("hospital")hname:String):Deferred<Response<List<NetworkReport>>>
+    fun getRportForHospital(@Path("hospital")hname:String,@Header("Authorization") token:String):Deferred<Response<List<NetworkReport>>>
 
     @POST("staff/report")
-    fun postReport(@Body report: NetworkReport, @Path("username")username: String):Deferred<Response<NetworkReport>>
+    fun postReport(@Body report: NetworkReport, @Path("username")username: String,@Header("Authorization") token:String):Deferred<Response<NetworkReport>>
 
     @DELETE("staff/deleteHospital/{id}")
-    fun deleteHospital(@Path("id") id:Long):Deferred<Response<Void>>
+    fun deleteHospital(@Path("id") id:Long,@Header("Authorization") token:String):Deferred<Response<Void>>
 
     companion object {
         fun getInstance(): StaffService {
-            val client = OkHttpClient
-                .Builder()
-                .connectTimeout(API_CONNECT_TIMEOUT, TimeUnit.SECONDS)
-                .readTimeout(API_READ_TIMEOUT,TimeUnit.SECONDS)
-                .build()
             val retrofit = Retrofit.Builder()
                 .baseUrl(BASE_URL)
-                .client(client)
                 .addConverterFactory(MoshiConverterFactory.create())
                 .addCallAdapterFactory(CoroutineCallAdapterFactory())
                 .build()

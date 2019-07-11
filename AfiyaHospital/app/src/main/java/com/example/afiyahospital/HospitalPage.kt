@@ -6,29 +6,60 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.lifecycle.get
+import androidx.lifecycle.observe
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.afiyahospital.R
+import com.example.afiyahospital.Utilits.InjectorUtils
 
 import com.example.afiyahospital.adapter.HospitalAdapter
-import com.example.afiyahospital.databinding.FragmentUserPageBinding
+import com.example.afiyahospital.databinding.FragmentHospitalBinding
+import com.example.afiyahospital.viewmodel.HospitalViewModelFactory
 import com.example.loginpage.viewmodel.HospitalViewModel
-import com.example.loginpage.viewmodel.UserViewModel
+import kotlinx.android.synthetic.main.fragment_hospital.view.*
+import kotlinx.coroutines.flow.BehaviourSubject
 
 
 class HospitalPage : Fragment() {
 
-    private lateinit var  viewModel:HospitalViewModel
+    private val viewModel:HospitalViewModel by  viewModels{
+        InjectorUtils.provideHositalViewModelFactory(requireContext())
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding = FragmentUserPageBinding.inflate(inflater,container,false)
+        val binding:FragmentHospitalBinding  = FragmentHospitalBinding.inflate(inflater,container,false)
         context ?: return binding.root
-        val adapter = HospitalAdapter()
-        binding.hospitalList.adapter = adapter
-        viewModel = ViewModelProviders.of(this).get(HospitalViewModel::class.java)
-        binding.setLifecycleOwner(this)
+
+        binding.setLifecycleOwner(viewLifecycleOwner)
+
+        val adaptere = HospitalAdapter()
+        binding.hospitalList.adapter = adaptere
+        subscribeUi(adaptere)
+        viewModel.eventNetworkError.observe(this, Observer<Boolean> { isNetworkError ->
+            if (isNetworkError) onNetworkError()
+        })
         return binding.root
+    }
+    private fun subscribeUi(adapter: HospitalAdapter) {
+        viewModel.hospitals.observe(viewLifecycleOwner) {hospitals->
+
+            if (hospitals!= null) adapter.submitList(hospitals)
+        }
+    }
+
+    private fun onNetworkError() {
+        if(!viewModel.isNetworkErrorShown.value!!) {
+            Toast.makeText(activity, "Network Error", Toast.LENGTH_LONG).show()
+            viewModel.onNetworkErrorShown()
+        }
     }
 }

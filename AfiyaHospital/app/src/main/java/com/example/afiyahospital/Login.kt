@@ -57,7 +57,7 @@ class Login : Fragment() {
 
                     {
 
-                        view?.findNavController()?.navigate(R.id.action_login_to_oneHospital)
+                        view?.findNavController()?.navigate(R.id.action_login_to_hospitalPage)
 
                     }
                         else

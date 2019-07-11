@@ -1,0 +1,15 @@
+[
+  {
+    "id": 1,
+    "hname": "hospital",
+    "image": "User one",
+    "owendby": "Private",
+  
+    "phoneNumbe": "user1@airmrt.com",
+    "relativeAdress": "AddisAbaba",
+    "latitude":"2333",
+    "longtuide":"32332",
+    "user":"username"
+
+  }
+]

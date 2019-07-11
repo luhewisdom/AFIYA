@@ -14,7 +14,7 @@ class UserViewModel(application:Application):AndroidViewModel(application) {
     private val userRepository:UserRepository
     val allUsers:LiveData<List<User>>
     init {
-        val afiaDao = AfiaDataBase.getDatabase(application,viewModelScope).userDao()
+        val afiaDao = AfiaDataBase.getDatabase(application).userDao()
         userRepository = UserRepository(afiaDao)
         allUsers = userRepository.allUser()
 

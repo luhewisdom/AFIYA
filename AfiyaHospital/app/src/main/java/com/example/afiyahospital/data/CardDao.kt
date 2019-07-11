@@ -2,6 +2,7 @@ package com.example.afiyahospital.data
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
+import retrofit2.http.Header
 
 @Dao
 interface CardDao {
@@ -13,11 +14,12 @@ interface CardDao {
     fun getCardByNo(cardno :String): LiveData<Card>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertHospital(card:Card):Long
-
+    fun insertCard(card:Card):Long
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertAll( cards: List<Card>)
     @Update
     fun update(card:Card):Int
 
     @Delete
-    fun deleteHospital(card:Card):Int
+    fun deleteCard(card:Card):Int
 }

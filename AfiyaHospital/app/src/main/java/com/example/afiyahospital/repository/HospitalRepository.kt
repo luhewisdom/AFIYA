@@ -7,39 +7,52 @@ import com.example.afiyahospital.network.asDatabaseModel
 import com.example.loginpage.data.HospitalDao
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import java.net.ConnectException
 
-class HospitalRepository(private val hospitalDao: HospitalDao) {
-    lateinit var  hospitalService:HospitalService
-    suspend fun refershHospital(){
+class HospitalRepository  constructor(private val hospitalDao: HospitalDao,private val  hospitalService:HospitalService) {
+    suspend fun refershHospital()=
         withContext(Dispatchers.IO){
+            val hospitals =hospitalService.getAllHospitals().await().body()
 
-            val hospitals =hospitalService.getAllHospitals().await()
-
-            hospitalDao.insertAll(hospitals.asDatabaseModel())
+            if (hospitals != null) {
+                hospitalDao.insertAll(hospitals.asDatabaseModel())
+            }
         }
-    }
-    val allHospitals : LiveData<List<Hospital>> = hospitalDao.getAllHospital()
 
-    suspend fun refreshOneHospital(id:Long){
+    //val allHospitals : LiveData<List<Hospital>> = hospitalDao.getAllHospital()
+
+    suspend fun refreshOneHospital(id:Long)=
         withContext(Dispatchers.IO){
-            val oneHospital = hospitalService.getOneHospital(id).await()
-            hospitalDao.insertHospital(oneHospital.asDatabaseModel())
+            val oneHospital = hospitalService.getOneHospital(id).await().body()
+            if (oneHospital != null) {
+                hospitalDao.insertHospital(oneHospital.asDatabaseModel())
+            }
+            return@withContext hospitalDao.getHospital(id)
         }
-    }
-    suspend fun refereshHospitals(){
+
+    suspend fun refereshHospitals()=
         withContext(Dispatchers.IO){
-
-            val hospitals =hospitalService.getHospitals().await()
-
-            hospitalDao.insertAll(hospitals.asDatabaseModel())
+            try {
+                val hospitals =hospitalService.getHospitals().await()
+                if (hospitals !=null)
+                {
+                    hospitalDao.insertAll(hospials = hospitals.asDatabaseModel())
+                }
+                return@withContext hospitalDao.getAllHospital()
+            }
+            catch (e:ConnectException)
+            {
+                return@withContext hospitalDao.getAllHospital()
+            }
+            return@withContext hospitalDao.getAllHospital()
         }
-    }
+
 
     ////////////////////////////////////////////////
     fun allHospital(): LiveData<List<Hospital>> = hospitalDao.getAllHospital()
 
-    fun oneHospital(hname:String): LiveData<Hospital> {
-        return hospitalDao.getHospital(hname)
+    fun oneHospital(id:Long): LiveData<Hospital> {
+        return hospitalDao.getHospital(id)
     }
     fun insertHospital(hospital: Hospital):Long{
         return hospitalDao.insertHospital(hospital)

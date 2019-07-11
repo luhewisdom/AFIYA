@@ -2,6 +2,7 @@ package com.example.loginpage.data
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
+import com.example.afiyahospital.data.Hospital
 
 
 @Dao
@@ -18,6 +19,9 @@ interface UserDao {
 
     @Insert
     fun insert(user: User):Long
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertAll( users: List<User>)
 
     @Update
     fun update(user: User):Int

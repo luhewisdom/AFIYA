@@ -19,26 +19,20 @@ import java.util.concurrent.TimeUnit
 interface LoginService {
 
 
-    @GET("/access-denied")
+    @GET("access-denied")
     fun accessDenied(): Deferred<Response<String>>
 
-    @POST("/login/{username/{password}}")
+    @POST("login/{username/{password}}")
     fun getLogin(@Path("username") username:String, @Path("password") password:String): Deferred<Response<LoginResponse>>
 
-    @POST("/registerClient")
+    @POST("registerClient")
     fun registerClient(@Body user:NetworkUser)
 
 
     companion object {
-        val client = OkHttpClient
-            .Builder()
-            .connectTimeout(API_CONNECT_TIMEOUT, TimeUnit.SECONDS)
-            .readTimeout(API_READ_TIMEOUT, TimeUnit.SECONDS)
-            .build()
         fun getInstance(): LoginService {
             val retrofit = Retrofit.Builder()
                 .baseUrl(BASE_URL)
-                .client(client)
                 .addConverterFactory(MoshiConverterFactory.create())
                 .addCallAdapterFactory(CoroutineCallAdapterFactory())
                 .build()

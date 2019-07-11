@@ -11,22 +11,19 @@ import kotlinx.coroutines.launch
 import java.io.IOException
 
 
-class HospitalViewModel(application: Application):AndroidViewModel(application)
+class HospitalViewModel(private val hospitalRepository: HospitalRepository):ViewModel()
 {
 
     private  var viewModelJob = Job()
 
-
-    private val hospitalRepository: HospitalRepository
-    private var allUsers: MutableLiveData<List<Hospital>>
+    val hospitals:LiveData<List<Hospital>>
+   //private var allUsers: MutableLiveData<List<Hospital>>
     init {
-        val hospitalDao = AfiaDataBase.getDatabase(application,viewModelScope).hospitalDao()
-        hospitalRepository = HospitalRepository(hospitalDao)
-        allUsers = hospitalRepository.allHospitals as MutableLiveData<List<Hospital>>
-
+          hospitals = hospitalRepository.allHospital()
         refershHospitalFromRepository()
     }
     private var _eventNetworkError = MutableLiveData<Boolean>(false)
+
     val eventNetworkError: LiveData<Boolean>
         get() = _eventNetworkError
 
@@ -56,17 +53,9 @@ class HospitalViewModel(application: Application):AndroidViewModel(application)
         super.onCleared()
         viewModelJob.cancel()
     }
+   //////////////////////////////////////////////////////////
 
 
-
-
-
-
-
-
-
-
-    //////////////////////////////////////////////////////
     fun insertHospital(hospital: Hospital) = viewModelScope.launch(Dispatchers.IO) {
         hospitalRepository.insertHospital(hospital)
     }

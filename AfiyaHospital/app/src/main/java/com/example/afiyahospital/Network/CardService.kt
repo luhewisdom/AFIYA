@@ -10,37 +10,32 @@ import okhttp3.OkHttpClient
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Path
+import retrofit2.http.*
 import java.util.concurrent.TimeUnit
 
 interface CardService {
 
 
-    @GET("/appoint/myappoints")
+    @GET("appoint/myappoints")
     fun getAllAppoint(): Deferred<Response<List<NetworkCard>>>
 
-    @GET("/appoint/myappoints/one/{cno}")
-    fun getOneAppoint(@Path("cno")cno:String): Deferred<Response<NetworkCard>>
+    @GET("appoint/myappoints/one/{cno}")
+    fun getOneAppoint(@Path("cno")cno:String,@Header("Authorization") token:String): Deferred<Response<NetworkCard>>
 
-    @GET("/appoint/reports")
-    fun getReports(): Deferred<Response<List<NetworkReport>>>
+    @GET("appoint/reports")
+    fun getReports(@Header("Authorization") token:String): Deferred<Response<List<NetworkReport>>>
 
-    @GET("/appoint/reports/one/{rno}")
-    fun getOneReport(@Path("rno") rno:String): Deferred<Response<NetworkReport>>
+    @GET("appoint/reports/one/{rno}")
+    fun getOneReport(@Path("rno") rno:String,@Header("Authorization") token:String): Deferred<Response<NetworkReport>>
 
 
-    @POST("/appoint/{hospital}")
-    fun  setAppoiintment(@Body card: Card, @Path("hospital")hospital:String) :Deferred<Response<NetworkCard>>
+    @POST("appoint/{hospital}")
+    fun  setAppoiintment(@Body card: Card, @Path("hospital")hospital:String,@Header("Authorization") token:String) :Deferred<Response<NetworkCard>>
 
 
     companion object {
         val client = OkHttpClient
             .Builder()
-            .connectTimeout(API_CONNECT_TIMEOUT, TimeUnit.SECONDS)
-            .readTimeout(API_READ_TIMEOUT, TimeUnit.SECONDS)
             .build()
         fun getInstance(): CardService {
             val retrofit = Retrofit.Builder()
