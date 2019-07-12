@@ -20,7 +20,7 @@ class StaffViewModel (private val staffRepository: StaffRepository): ViewModel()
     private  var viewModelJob = Job()
     val hospitalAppointments:   LiveData<List<Card>>
        get() = _allCardResponse
-    fun getHospitalAppointments(token: String) =
+      fun getHospitalAppointments(token: String) =
         viewModelScope.launch {
             _allCardResponse.postValue(staffRepository.gethospitalAppointment(token) as List<Card>)
         }

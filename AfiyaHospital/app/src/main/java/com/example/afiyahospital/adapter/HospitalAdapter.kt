@@ -1,5 +1,6 @@
 package com.example.afiyahospital.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -26,13 +27,12 @@ class HospitalAdapter: ListAdapter<Hospital, HospitalAdapter.ViewHolder>(Hospita
        val hospital =getItem(position)
         holder.apply {
             bind(createOnClickListener(hospital.id),hospital)
+            itemView.tag = hospital
         }
-
     }
     private fun createOnClickListener(hospitalId:Long):View.OnClickListener{
         return View.OnClickListener { val direction:NavDirections =
             HospitalPageDirections.actionHospitalPage2ToOneHospital(hospitalId)
-           // HospitalPageDirections.actionHospitalPage2ToOneHospital(hospitalId)
             it.findNavController().navigate(direction)
         }
     }
@@ -46,6 +46,7 @@ class HospitalAdapter: ListAdapter<Hospital, HospitalAdapter.ViewHolder>(Hospita
             with(binding) {
                 clickListener = listener
                 hospital = item
+
                 executePendingBindings()
             }
         }
