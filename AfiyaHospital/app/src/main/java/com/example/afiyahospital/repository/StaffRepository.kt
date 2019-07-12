@@ -27,7 +27,7 @@ class   StaffRepository constructor(private val cardDao: CardDao, private val  s
 
     suspend fun gethospitalAppointment(token: String):LiveData<List<Card>> =
         withContext(Dispatchers.IO){
-           val cards =  staffService.getHospitalAppointment(token).await() as List<Card>
+           val cards =  staffService.getHospitalAppointment(token).await().body() as List<Card>
             cardDao.insertAll(cards)
             return@withContext cardDao.getAllCard()
         }
@@ -35,8 +35,6 @@ class   StaffRepository constructor(private val cardDao: CardDao, private val  s
         withContext(Dispatchers.IO){
             val card =  staffService.updateAppointment(id,approve,desc,token) as Card
             cardDao.update(card)
-
-
         }
 
 }

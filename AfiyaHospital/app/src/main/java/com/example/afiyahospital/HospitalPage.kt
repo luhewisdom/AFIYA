@@ -42,7 +42,7 @@ class HospitalPage : Fragment() {
         binding.setLifecycleOwner(viewLifecycleOwner)
 
         val adaptere = HospitalAdapter()
-        binding.hospitalList.adapter = adaptere
+       // binding.hospitalList.adapter = adaptere
         subscribeUi(adaptere)
         viewModel.eventNetworkError.observe(this, Observer<Boolean> { isNetworkError ->
             if (isNetworkError) onNetworkError()
@@ -52,7 +52,7 @@ class HospitalPage : Fragment() {
     private fun subscribeUi(adapter: HospitalAdapter) {
         viewModel.hospitals.observe(viewLifecycleOwner) {hospitals->
 
-            if (hospitals!= null) adapter.submitList(hospitals)
+             adapter.submitList(hospitals)
         }
     }
 

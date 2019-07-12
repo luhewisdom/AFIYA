@@ -19,7 +19,7 @@ class UserRepository(private val userDao: UserDao, private val roleDao: RoleDao,
         }
     suspend fun listOfHospitalUsers(token: String) =
         withContext(Dispatchers.IO){
-            val users = userService.getAllUsers() as List<User>
+            val users = userService.getAllUsers().await().body() as List<User>
             userDao.insertAll(users)
         }
     suspend fun registerRole(role:Role , token: String)=

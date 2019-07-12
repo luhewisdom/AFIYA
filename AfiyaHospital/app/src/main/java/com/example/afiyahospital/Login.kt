@@ -45,10 +45,9 @@ class Login : Fragment() {
         val loginButton = binding.loginbuttonId
         val signupButton = binding.signupbuttonId
 
-        userViewModel = ViewModelProviders.of(this).get(UserViewModel::class.java)
         loginButton.setOnClickListener {
            AsyncTask.execute {
-                userOne= userViewModel.oneUser(usernameEditText.text.toString(),passwordEditText.text.toString())
+               // userOne= userViewModel.oneUser(usernameEditText.text.toString(),passwordEditText.text.toString())
 
            }
             if(!emptyValidation())

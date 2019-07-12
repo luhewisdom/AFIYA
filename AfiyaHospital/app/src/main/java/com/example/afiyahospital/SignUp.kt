@@ -40,7 +40,6 @@ class SignUp : Fragment() {
          passwordEditText = binding.passwordEdittext
          registerButton = binding.registerButton
 
-        userViewModel = ViewModelProviders.of(this).get(UserViewModel::class.java)
         val activity: MainActivity = activity as MainActivity
         registerButton.setOnClickListener {
             val user = User(userNameEditText.text.toString(),
@@ -53,7 +52,7 @@ class SignUp : Fragment() {
             if (!emptyValidation())
             {
                 AsyncTask.execute{
-                    userViewModel.insertUser(user)
+                   // userViewModel.insertUser(user)
                 }
 
                 view?.findNavController()?.navigate(R.id.action_signUp_to_login)

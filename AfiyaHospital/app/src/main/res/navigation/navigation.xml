@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto"
-            xmlns:tools="http://schemas.android.com/tools" android:id="@+id/navigation" app:startDestination="@id/hospitalPage2">
+            xmlns:tools="http://schemas.android.com/tools" android:id="@+id/navigation" app:startDestination="@id/login">
 
-    <fragment android:id="@+id/login" android:name="com.example.loginpage.Login" android:label="Login">
+    <fragment android:id="@+id/login" android:name="com.example.loginpage.Login" android:label="Login"  tools:layout="@layout/fragment_login">
         <action android:id="@+id/action_login_to_signUp" app:destination="@id/signUp" app:enterAnim="@anim/fad_in"
                 app:exitAnim="@anim/fade_out" app:popEnterAnim="@anim/slide_in_left"
                 app:popExitAnim="@anim/slide_in_right"/>
@@ -12,11 +12,11 @@
         <action android:id="@+id/action_login_to_mapFragment" app:destination="@id/mapFragment"/>
         <action android:id="@+id/action_login_to_hospitalPage" app:destination="@id/hospitalPage"/>
     </fragment>
-    <fragment android:id="@+id/signUp" android:name="com.example.loginpage.SignUp" android:label="SignUp">
+    <fragment android:id="@+id/signUp" android:name="com.example.loginpage.SignUp" android:label="SignUp" tools:layout="@layout/fragment_sign_up">
         <action android:id="@+id/action_signUp_to_login" app:destination="@id/login"/>
     </fragment>
     <fragment android:id="@+id/hospitalPage" android:name="com.example.loginpage.HospitalPage"
-              android:label="HospitalPage">
+              android:label="HospitalPage"  tools:layout="@layout/fragment_hospital">
         <action android:id="@+id/action_hospitalPage_to_setAppointmnetFragment"
                 app:destination="@id/setAppointmnetFragment"/>
         <action android:id="@+id/action_hospitalPage_to_checkReport" app:destination="@id/checkReport"/>
@@ -45,7 +45,7 @@
     <fragment android:id="@+id/mapFragment" android:name="com.example.afiyahospital.MapFragment"
               android:label="MapFragment"/>
     <fragment android:id="@+id/oneHospital" android:name="com.example.afiyahospital.OneHospital"
-              android:label="fragment_one_hospital" >
+              android:label="fragment_one_hospital" tools:layout="@layout/fragment_one_hospital">
         <argument android:name="id" app:argType="long" android:defaultValue="1L"/>
     </fragment>
     <fragment android:id="@+id/hospitalPage2" android:name="com.example.loginpage.HospitalPage"

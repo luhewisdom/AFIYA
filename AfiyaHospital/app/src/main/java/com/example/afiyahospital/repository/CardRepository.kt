@@ -27,7 +27,7 @@ class   CardRepository constructor(private val cardDao: CardDao, private val  ca
     suspend fun refereshCard()=
         withContext(Dispatchers.IO){
             try {
-                val cards = cardService.getAllAppoint().await()
+                val cards = cardService.getAllAppoint().await().body()
                        cardDao.insertAll(cards = cards as List<Card>)
                 return@withContext cardDao.getAllCard()
             }
@@ -35,7 +35,6 @@ class   CardRepository constructor(private val cardDao: CardDao, private val  ca
             {
                 return@withContext  cardDao.getAllCard()
             }
-            return@withContext  cardDao.getAllCard()
         }
     suspend fun setAppointment(card: Card,hname :String,token: String) =
         withContext(Dispatchers.IO){
@@ -45,7 +44,7 @@ class   CardRepository constructor(private val cardDao: CardDao, private val  ca
         }
     suspend fun getAppointment(token: String) =
         withContext(Dispatchers.IO){
-            val cards = cardService.getAllAppoint().await() as List<Card>
+            val cards = cardService.getAllAppoint().await().body() as List<Card>
             cardDao.insertAll(cards)
             cardDao.getAllCard()
         }
