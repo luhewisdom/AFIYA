@@ -17,7 +17,7 @@ interface CardService {
 
 
     @GET("appoint/myappoints")
-    fun getAllAppoint(): Deferred<Response<List<NetworkCard>>>
+    fun getAllAppoint(@Header("Authorization") token:String): Deferred<Response<List<NetworkCard>>>
 
     @GET("appoint/myappoints/one/{cno}")
     fun getOneAppoint(@Path("cno")cno:String,@Header("Authorization") token:String): Deferred<Response<NetworkCard>>

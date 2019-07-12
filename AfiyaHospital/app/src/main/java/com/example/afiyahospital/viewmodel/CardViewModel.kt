@@ -1,9 +1,11 @@
 package com.example.afiyahospital.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.afiyahospital.data.Card
 import com.example.afiyahospital.data.Hospital
 import com.example.afiyahospital.repository.CardRepository
 import com.example.afiyahospital.repository.HospitalRepository
@@ -15,11 +17,10 @@ class CardViewModel(private val cardRepository: CardRepository): ViewModel()
 {
     private  var viewModelJob = Job()
 
-    val hospitals: LiveData<List<Hospital>>
+    val cards: LiveData<List<Card>>
     //private var allUsers: MutableLiveData<List<Hospital>>
     init {
-        hospitals = hospitalRepository.allHospital()
-        refershHospitalFromRepository()
+        cards = cardRepository.allCards()
     }
     private var _eventNetworkError = MutableLiveData<Boolean>(false)
 
@@ -34,23 +35,46 @@ class CardViewModel(private val cardRepository: CardRepository): ViewModel()
         _isNetworkErrorShown.value = true
     }
 
-    private fun refershHospitalFromRepository(){
+    private fun refershCardFromRepository(token: String){
         viewModelScope.launch {
             try {
-                hospitalRepository.refershHospital()
+                cardRepository.refereshCard(token)
                 _eventNetworkError.value = false
                 _isNetworkErrorShown.value = false
             }
             catch (networkError: IOException)
             {
-
+                Log.d("No Connection", "No connection")
             }
         }
     }
+
+    private fun refreshCardOne(cno:String,token: String)
+    {
+        viewModelScope.launch {
+            try {
+                cardRepository.refreshOneHospital(cno,token)
+            }
+            catch (networkError:IOException)
+            {
+                Log.d("No Connection", "No connection")
+            }
+        }
+    }
+
+    private fun setAppointment(card:Card,hname:String,token:String)=
+        viewModelScope.launch {
+
+        }
+    private fun getAppointment(token: String) =
+        viewModelScope.launch {
+            cardRepository.getAppointment(token)
+        }
 
     override fun onCleared() {
         super.onCleared()
         viewModelJob.cancel()
     }
+
 
 }
