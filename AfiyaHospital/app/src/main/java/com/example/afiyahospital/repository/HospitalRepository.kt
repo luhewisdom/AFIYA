@@ -13,7 +13,15 @@ class HospitalRepository  constructor(private val hospitalDao: HospitalDao,priva
     suspend fun refershHospital()=
         withContext(Dispatchers.IO){
             val hospitals =hospitalService.getAllHospitals().await().body()
-                hospitalDao.insertAll(hospitals as List<Hospital>)
+
+            if (hospitals !=null)
+            {
+                for (res in hospitals){
+
+                    var hospital = Hospital(res.id,res.hname,res.image,res.owendby,res.phoneNumbe,res.relativeAdress,res.latitude,res.longtuide,res.user)
+                    hospitalDao.insertHospital(hospital)
+                }
+            }
             return@withContext hospitalDao.getAllHospital()
         }
 
@@ -31,11 +39,16 @@ class HospitalRepository  constructor(private val hospitalDao: HospitalDao,priva
     suspend fun refereshHospitals()=
         withContext(Dispatchers.IO){
             try {
-                val hospitals =hospitalService.getHospitals().await()
+                val hospitals =hospitalService.getHospitals().await().body()
                 if (hospitals !=null)
                 {
-                    hospitalDao.insertAll(hospials = hospitals.asDatabaseModel())
+                    for (res in hospitals){
+
+                        var hospital = Hospital(res.id,res.hname,res.image,res.owendby,res.phoneNumbe,res.relativeAdress,res.latitude,res.longtuide,res.user)
+                        hospitalDao.insertHospital(hospital)
+                    }
                 }
+
                 return@withContext hospitalDao.getAllHospital()
             }
             catch (e:ConnectException)

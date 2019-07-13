@@ -4,7 +4,7 @@ import com.example.afiyahospital.data.Report
 import com.squareup.moshi.JsonClass
 import java.util.*
 
-@JsonClass(generateAdapter = true)
+
 data class NetworkReport(
     val id:Long,
     val reportNo:String,

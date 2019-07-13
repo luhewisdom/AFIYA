@@ -10,16 +10,17 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.converter.scalars.ScalarsConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Path
 import java.util.concurrent.TimeUnit
 
 interface HospitalService {
     @GET("")
-    fun getHospitals():Deferred<NetworkHospitals>
+    fun getHospitals():Deferred<Response<List<NetworkHospital>>>
 
     @GET("hospital/hospitals")
-    fun getAllHospitals():Deferred<Response<NetworkHospitals>>
+    fun getAllHospitals():Deferred<Response<List<NetworkHospital>>>
 
     @GET("hospital/hospitals/{id}")
     fun getOneHospital(@Path("id") id:Long):Deferred<Response<NetworkHospital>>
@@ -32,8 +33,9 @@ interface HospitalService {
                 .build()
             val retrofit = Retrofit.Builder()
                 .baseUrl("http://10.0.2.2:8080/")
-                .client(client)
+
                 .addConverterFactory(MoshiConverterFactory.create())
+                .addConverterFactory(ScalarsConverterFactory.create())
                 .addCallAdapterFactory(CoroutineCallAdapterFactory())
                 .build()
             return retrofit.create(HospitalService::class.java)

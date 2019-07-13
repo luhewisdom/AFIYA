@@ -3,7 +3,6 @@ package com.example.afiyahospital.network
 import com.example.afiyahospital.data.Role
 import com.squareup.moshi.JsonClass
 
-@JsonClass(generateAdapter = true)
 data class NetworkRole(val id:Long ,
                        val role:String )
 fun NetworkRole.asDatabaseModel(): Role {

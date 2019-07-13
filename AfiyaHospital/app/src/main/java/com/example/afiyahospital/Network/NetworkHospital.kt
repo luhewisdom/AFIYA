@@ -8,7 +8,7 @@ import com.squareup.moshi.JsonClass
 
 
 
-@JsonClass(generateAdapter = true)
+
 data class NetworkHospital (
     val id:Long,
     val hname:String,
@@ -21,7 +21,6 @@ data class NetworkHospital (
     val user:String
 )
 
-@JsonClass(generateAdapter = true)
 data class NetworkHospitals(val hospitals: List<NetworkHospital>)
 
 fun NetworkHospital.asDatabaseModel(): Hospital {

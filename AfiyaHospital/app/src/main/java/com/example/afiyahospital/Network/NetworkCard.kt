@@ -5,7 +5,7 @@ import com.example.afiyahospital.data.Hospital
 import com.squareup.moshi.JsonClass
 import java.util.*
 
-@JsonClass(generateAdapter = true)
+
 data class NetworkCard(
     val id:Long,
     val cardNo:String,

@@ -17,9 +17,11 @@ class HospitalViewModel(private val hospitalRepository: HospitalRepository):View
     private  var viewModelJob = Job()
 
     val hospitals:LiveData<List<Hospital>>
+
    //private var allUsers: MutableLiveData<List<Hospital>>
     init {
           hospitals = hospitalRepository.allHospital()
+
         refershHospitalFromRepository()
     }
     private var _eventNetworkError = MutableLiveData<Boolean>(false)

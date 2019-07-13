@@ -55,7 +55,9 @@ object InjectorUtils {
         val repository = getCardRepository(context)
         return CardViewModelFactory(repository)
     }
-
+    fun provideHospitalDetailViewModel(context: Context,id:Long):HospitalDetailViewModelFactory{
+        return HospitalDetailViewModelFactory(getHospitalRepository(context),id)
+    }
     private fun getReportRepository(context: Context):ReportRepository{
         return ReportRepository(AfiaDataBase.getDatabase(context).reportDao(), StaffService.getInstance())
     }

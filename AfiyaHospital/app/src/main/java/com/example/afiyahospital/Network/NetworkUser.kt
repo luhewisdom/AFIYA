@@ -3,7 +3,7 @@ package com.example.afiyahospital.network
 import com.example.loginpage.data.User
 import com.squareup.moshi.JsonClass
 
-@JsonClass(generateAdapter = true)
+
 data class NetworkUser(
     val id:Long,
     val username:String,
