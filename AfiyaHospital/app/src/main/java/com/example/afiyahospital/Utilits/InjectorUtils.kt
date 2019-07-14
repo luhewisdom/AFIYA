@@ -72,13 +72,17 @@ object InjectorUtils {
         return UserRepository(AfiaDataBase.getDatabase(context).userDao(),AfiaDataBase.getDatabase(context).roleDao(),
             UserService.getInstance())
     }
-    fun provideStaffViewModelFactory(context: Context):UserViewModelFactory{
-        return UserViewModelFactory(getUserRepoostiory(context))
+    fun provideStaffViewModelFactory(context: Context):StaffViewModelFactory{
+        return StaffViewModelFactory(getStaffRepository(context))
     }
     private  fun getLoginRepository(context: Context):LoginRepository{
         return LoginRepository(AfiaDataBase.getDatabase(context).userDao(), LoginService.getInstance())
     }
     fun provideLoginViewModelFactory(context: Context):LoginViewModelFactory{
         return LoginViewModelFactory(getLoginRepository(context),context)
+    }
+    fun provideGson(): Gson {
+        return GsonBuilder().create()
+
     }
 }

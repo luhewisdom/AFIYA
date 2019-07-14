@@ -8,6 +8,7 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Looper
 import android.text.TextUtils
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -105,6 +106,7 @@ class Login : Fragment() {
             if(res.isSuccessful){
 
                 SharedPrefUtil.savePreference(sharedPrefrence,res.body()!!.token,res.body()!!.username,res.body()!!.role)
+                Log.d("string",res.body()!!.token)
                 //set authentication state
                 loginViewModel.acceptAuthentication()
                 successLogin(res.body()!!.role)
@@ -129,7 +131,7 @@ class Login : Fragment() {
     fun successLogin( role:String) {
         if(role == "STAFF")
         {
-            requireView().findNavController().navigate(R.id.appointmentFragment)
+            requireView().findNavController().navigate(R.id.appointmentsFragment)
 
         }
         else if (role =="SUPER")

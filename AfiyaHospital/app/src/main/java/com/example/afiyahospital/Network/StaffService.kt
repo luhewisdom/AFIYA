@@ -16,7 +16,14 @@ import java.util.concurrent.TimeUnit
 interface StaffService {
 
     @POST("staff/registerHospital")
-    fun  registerHospital(@Body hospital: Hospital,@Header("Authorization") token:String) : Deferred<Response<NetworkHospital>>
+    fun  registerHospital(@Header("Authorization") token:String,
+                          @Query("hname") hname:String,
+                          @Query("owendby") owendby:String,
+                          @Query("phoneNumber") phoneNumber:String,
+                          @Query("image") image:String,
+                          @Query("relativeAdress") relativeAdress:String,
+                          @Query("longtuide") longtuide:String,
+                          @Query("latit") latit:String) : Deferred<Response<NetworkHospital>>
 
 
     @GET("staff/appoint/myappoints/one/{cno}")
