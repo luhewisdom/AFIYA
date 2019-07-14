@@ -2,29 +2,32 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto"
             xmlns:tools="http://schemas.android.com/tools" android:id="@+id/navigation" app:startDestination="@id/hospitalPage2">
-
-    <fragment android:id="@+id/login" android:name="com.example.loginpage.Login" android:label="Login"  tools:layout="@layout/fragment_login">
+    
+    <fragment android:id="@+id/oneHospital2" android:name="com.example.afiyahospital.OneHospital"
+              android:label="fragment_one_hospital" tools:layout="@layout/fragment_one_hospital">
+        <argument android:name="id" app:argType="long" android:defaultValue="1L"/>
+        <action android:id="@+id/action_oneHospital2_to_createHospital" app:destination="@id/createHospital"/>
+    </fragment>
+    <fragment android:id="@+id/login" android:name="com.example.loginpage.Login" android:label="Login" tools:layout="@layout/fragment_login">
         <action android:id="@+id/action_login_to_signUp" app:destination="@id/signUp" app:enterAnim="@anim/fad_in"
                 app:exitAnim="@anim/fade_out" app:popEnterAnim="@anim/slide_in_left"
                 app:popExitAnim="@anim/slide_in_right"/>
         <action android:id="@+id/action_login_to_superFragment2" app:destination="@id/superFragment"/>
 	    <action android:id="@+id/action_login_to_mapFragment" app:destination="@id/mapFragment"/>
-        <action android:id="@+id/action_login_to_hospitalPage" app:destination="@id/hospitalPage"/>
-	    <action android:id="@+id/action_login_to_appointmentsFragment" app:destination="@id/appointmentsFragment"/>
-        <action android:id="@+id/action_login_to_reportForHospital" app:destination="@id/reportForHospital"/>
+        <action android:id="@+id/action_login_to_appointmentsFragment" app:destination="@id/appointmentsFragment"/>
+        <action android:id="@+id/action_login_to_setAppointmnetFragment" app:destination="@id/setAppointmnetFragment"/>
     </fragment>
     <fragment android:id="@+id/signUp" android:name="com.example.loginpage.SignUp" android:label="SignUp" tools:layout="@layout/fragment_sign_up">
         <action android:id="@+id/action_signUp_to_login" app:destination="@id/login"/>
     </fragment>
     <fragment android:id="@+id/hospitalPage" android:name="com.example.loginpage.HospitalPage"
               android:label="HospitalPage"  tools:layout="@layout/fragment_hospital">
-        <action android:id="@+id/action_hospitalPage_to_setAppointmnetFragment"
-                app:destination="@id/setAppointmnetFragment"/>
-        <action android:id="@+id/action_hospitalPage_to_checkReport" app:destination="@id/checkReport"/>
         <action android:id="@+id/action_hospitalPage_to_oneHospital" app:destination="@id/oneHospital"/>
     </fragment>
     <fragment android:id="@+id/createHospital" android:name="com.example.afiyahospital.CreateHospital"
-              android:label="fragment_create_hospital" tools:layout="@layout/fragment_create_hospital"/>
+              android:label="fragment_create_hospital" tools:layout="@layout/fragment_create_hospital">
+        <action android:id="@+id/action_createHospital_to_oneHospital2" app:destination="@id/oneHospital2"/>
+    </fragment>
     <fragment android:id="@+id/superFragment" android:name="com.example.afiyahospital.SuperFragment"
               android:label="fragment_super" tools:layout="@layout/fragment_super">
         <action android:id="@+id/action_superFragment_to_userFragment" app:destination="@id/userFragment"/>
@@ -36,12 +39,16 @@
         <action android:id="@+id/action_appointmentsFragment_to_createHospital" app:destination="@id/createHospital"/>
         <action android:id="@+id/action_appointmentsFragment_to_appointmentFragment"
                 app:destination="@id/appointmentFragment"/>
+        <action android:id="@+id/action_appointmentsFragment_to_reportForHospital"
+                app:destination="@id/reportForHospital"/>
     </fragment>
     <fragment android:id="@+id/appointmentFragment" android:name="com.example.afiyahospital.AppointmentFragment"
               android:label="AppointmentFragment"/>
     <fragment android:id="@+id/setAppointmnetFragment" android:name="com.example.afiyahospital.SetAppointmnetFragment"
               android:label="SetAppointmnetFragment">
         <action android:id="@+id/action_setAppointmnetFragment_to_addAppointment" app:destination="@id/addAppointment"/>
+        <action android:id="@+id/action_setAppointmnetFragment_to_checkReport" app:destination="@id/checkReport"/>
+        <action android:id="@+id/action_setAppointmnetFragment_to_detailAppoint" app:destination="@id/detailAppoint"/>
     </fragment>
     <fragment android:id="@+id/checkReport" android:name="com.example.afiyahospital.CheckReport"
               android:label="CheckReport">
@@ -66,5 +73,9 @@
     <fragment android:id="@+id/reportForHospital" android:name="com.example.afiyahospital.ReportForHospital"
               android:label="fragment_report_for_hospital" tools:layout="@layout/fragment_report_for_hospital">
         <action android:id="@+id/action_reportForHospital_to_createReport" app:destination="@id/createReport"/>
+    </fragment>
+    <fragment android:id="@+id/detailAppoint" android:name="com.example.afiyahospital.DetailAppoint"
+              android:label="fragment_detail_appoint" tools:layout="@layout/fragment_detail_appoint">
+        <argument android:name="rno" app:argType="string"/>
     </fragment>
 </navigation>

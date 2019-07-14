@@ -1,5 +1,6 @@
 package com.example.afiyahospital.repository
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import com.example.afiyahospital.data.Card
 import com.example.afiyahospital.data.CardDao
@@ -17,7 +18,7 @@ import java.net.ConnectException
 class   CardRepository constructor(private val cardDao: CardDao, private val  cardService: CardService) {
 
 
-    suspend fun refreshOneHospital(cno:String,token:String)=
+    suspend fun refreshOneCard(cno:String,token:String)=
         withContext(Dispatchers.IO){
             val oneCard = cardService.getOneAppoint(cno,token).await()
                 cardDao.insertCard(oneCard as Card)
@@ -28,30 +29,36 @@ class   CardRepository constructor(private val cardDao: CardDao, private val  ca
         withContext(Dispatchers.IO){
             try {
                 val cards = cardService.getAllAppoint(token).await().body()
-                       cardDao.insertAll(cards = cards as List<Card>)
-                return@withContext cardDao.getAllCard()
+                Log.v("LLLLLLLLLLLL",cards.toString())
+                Log.v("LLLLLLLLLLLL",token)
+                if (cards !=null)
+                {
+                    for (res in cards){
+
+                        var card = Card(res.id,res.cardNo,res.description,res.date,res.approved,res.userName,res.hospitalName)
+                        cardDao.insertCard(card)
+                    }
+                }
+                return@withContext cardDao.getAllCardRoom()
             }
             catch (e: ConnectException)
             {
-                return@withContext  cardDao.getAllCard()
+                return@withContext  cardDao.getAllCardRoom()
             }
         }
+
+    ////
     suspend fun setAppointment(card: Card,hname :String,token: String) =
         withContext(Dispatchers.IO){
-            val card =cardService.setAppoiintment(card,hname,token)
-            cardDao.insertCard(card as Card)
+            val card =cardService.setAppoiintment(card,hname,token).await().body()
+            cardDao.insertCard(card!!.asDatabaseModel())
             cardDao.getAllCard()
         }
-    suspend fun getAppointment(token: String) =
-        withContext(Dispatchers.IO){
-            val cards = cardService.getAllAppoint(token).await().body() as List<Card>
-            cardDao.insertAll(cards)
-            cardDao.getAllCard()
-        }
+
 
 
     ////////////////////////////////////////////////
-    fun allCards(): LiveData<List<Card>> = cardDao.getAllCard()
+
 
     fun oneHospital(cno:String): LiveData<Card> {
         return cardDao.getCardByNo(cno)

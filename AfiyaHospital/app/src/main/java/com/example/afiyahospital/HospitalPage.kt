@@ -50,7 +50,7 @@ class HospitalPage : Fragment() {
         return binding.root
     }
     private fun subscribeUi(adapter: HospitalAdapter) {
-        viewModel.hospitals.observe(viewLifecycleOwner) {hospitals->
+            viewModel.hospitals.observe(viewLifecycleOwner) {hospitals->
 
              adapter.submitList(hospitals)
         }

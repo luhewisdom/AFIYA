@@ -19,7 +19,7 @@ class   StaffRepository constructor(private val cardDao: CardDao, private val  s
     private val gsonBuilder: Gson = InjectorUtils.provideGson()
 
 
-    suspend fun registerSHospital(h: NetworkHospital,token:String) : LiveData<Hospital> =
+    suspend fun registerSHospital(h: NetworkHospital,token:String) : Hospital =
         withContext(Dispatchers.IO)
     {
        val hospitalNetwork =  staffService.registerHospital(token

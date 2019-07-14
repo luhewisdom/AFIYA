@@ -25,7 +25,6 @@ class HospitalRepository  constructor(private val hospitalDao: HospitalDao,priva
             return@withContext hospitalDao.getAllHospital()
         }
 
-    //val allHospitals : LiveData<List<Hospital>> = hospitalDao.getAllHospital()
 
     suspend fun refreshOneHospital(id:Long)=
         withContext(Dispatchers.IO){
@@ -63,8 +62,9 @@ class HospitalRepository  constructor(private val hospitalDao: HospitalDao,priva
     fun allHospital(): LiveData<List<Hospital>> = hospitalDao.getAllHospital()
 
     fun oneHospital(id:Long): LiveData<Hospital> {
-        return hospitalDao.getHospital(id)
+        return hospitalDao.getHospitalRoom(id)
     }
+
     fun insertHospital(hospital: Hospital):Long{
         return hospitalDao.insertHospital(hospital)
     }

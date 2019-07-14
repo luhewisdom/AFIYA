@@ -10,7 +10,7 @@ data class NetworkCard(
     val id:Long,
     val cardNo:String,
     val description:String,
-    val date : Date,
+    val date : String,
     val approved:Boolean,
     val userName:String,
     val hospitalName:String

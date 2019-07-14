@@ -11,13 +11,19 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.observe
+import androidx.navigation.NavDirections
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.example.afiyahospital.Utilits.DEFAULT_VALUE_SHARED_PREF
 import com.example.afiyahospital.Utilits.InjectorUtils
 import com.example.afiyahospital.Utilits.SHARED_PREFERENCE_FILE
 import com.example.afiyahospital.Utilits.TOKEN_KEY
+import com.example.afiyahospital.adapter.HospitalAdapter
 import com.example.afiyahospital.databinding.FragmentCreateHospitalBinding
 import com.example.afiyahospital.network.NetworkHospital
 import com.example.afiyahospital.viewmodel.StaffViewModel
+import com.example.loginpage.HospitalPageDirections
 import com.example.loginpage.viewmodel.HospitalViewModel
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_create_hospital.*
@@ -54,7 +60,7 @@ class CreateHospital : Fragment() {
     ): View? {
      val binding = FragmentCreateHospitalBinding.inflate(inflater,container,false)
         binding.addHospital= onAddHospital()
-
+        subscribeUi()
 
         return binding.root
     }
@@ -62,8 +68,8 @@ class CreateHospital : Fragment() {
         return View.OnClickListener {
             viewModel.createHospital(readFields(),token)
             Log.d("token",token)
-
         }
+
     }
 
     private fun readFields():NetworkHospital{
@@ -77,6 +83,15 @@ class CreateHospital : Fragment() {
             image = ".jpg",
             user = ""
         )
+    }
+    private fun subscribeUi() {
+        viewModel.hospital.observe(viewLifecycleOwner) {hospitals->
+
+                val direction= CreateHospitalDirections.actionCreateHospitalToOneHospital2(hospitals.id)
+                findNavController().navigate(direction)
+
+
+        }
     }
 
 

@@ -140,7 +140,7 @@ class Login : Fragment() {
         }
         else if (role == "client")
         {
-            requireView().findNavController().navigate(R.id.hospitalPage)
+            requireView().findNavController().navigate(R.id.setAppointmnetFragment)
         }
         else{
             requireView().findNavController().navigate(R.id.login)

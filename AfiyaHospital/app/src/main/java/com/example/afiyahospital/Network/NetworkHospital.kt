@@ -21,7 +21,7 @@ data class NetworkHospital (
     val user:String
 )
 
-data class NetworkHospitals(val hospitals: List<NetworkHospital>)
+
 
 fun NetworkHospital.asDatabaseModel(): Hospital {
     return Hospital(id = id, hname = hname,image = image,owendby = owendby,phoneNumbe =phoneNumbe

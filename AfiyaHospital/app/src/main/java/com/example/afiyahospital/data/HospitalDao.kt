@@ -11,8 +11,10 @@ interface HospitalDao {
     fun getAllHospital(): LiveData<List<Hospital>>
 
     @Query("SELECT * FROM hospital Where id =:id")
-    fun getHospital(id:Long):LiveData<Hospital>
+    fun getHospital(id:Long):Hospital
 
+    @Query("SELECT * FROM hospital Where id =:id")
+    fun getHospitalRoom(id:Long):LiveData<Hospital>
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll( hospials: List<Hospital>)
 

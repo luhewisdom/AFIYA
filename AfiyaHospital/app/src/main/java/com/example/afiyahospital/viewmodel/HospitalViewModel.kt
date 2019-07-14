@@ -18,7 +18,6 @@ class HospitalViewModel(private val hospitalRepository: HospitalRepository):View
 
     val hospitals:LiveData<List<Hospital>>
 
-   //private var allUsers: MutableLiveData<List<Hospital>>
     init {
           hospitals = hospitalRepository.allHospital()
 

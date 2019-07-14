@@ -74,6 +74,9 @@ dependencies {
     implementation 'com.muddzdev:styleabletoast:2.2.2'
     //circular imageview
     implementation 'de.hdodenhof:circleimageview:3.0.0'
+    ///
+    implementation "com.squareup.moshi:moshi-kotlin:1.5.0"
+    implementation "com.squareup.moshi:moshi-adapters:1.5.0"
 
     // Testing dependencies
     androidTestImplementation "androidx.arch.core:core-testing:$rootProject.coreTestingVersion"

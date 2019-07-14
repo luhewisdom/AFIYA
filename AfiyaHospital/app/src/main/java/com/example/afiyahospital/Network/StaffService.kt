@@ -26,8 +26,7 @@ interface StaffService {
                           @Query("latit") latit:String) : Deferred<Response<NetworkHospital>>
 
 
-    @GET("staff/appoint/myappoints/one/{cno}")
-    fun getOneAppoint(@Path("cno")cno:String,@Header("Authorization") token:String): Deferred<Response<NetworkCard>>
+
 
     @GET("staff/appointments")
     fun getHospitalAppointment(@Header("Authorization") token:String): Deferred<Response<NetworkCard>>
@@ -41,11 +40,16 @@ interface StaffService {
     @DELETE("staff/appointment/delete")
     fun delteAppointmetnt(@Path("id")id:Long,@Header("Authorization") token:String):Deferred<Response<Void>>
 
-    @GET("staff/appoint/reports/one/{rno}")
-    fun getOneReport(@Path("rno") rno:String,@Header("Authorization") token:String): Deferred<Response<NetworkReport>>
 
     @GET("staff/reports")
     fun getRportForHospital(@Path("hospital")hname:String,@Header("Authorization") token:String):Deferred<Response<List<NetworkReport>>>
+
+    @GET("staff/appoint/reports/one/{rno}")
+    fun getOneReport(@Path("rno") rno:String,@Header("Authorization") token:String): Deferred<Response<NetworkReport>>
+
+    @GET("staff/appoint/myappoints/one/{cno}")
+    fun getOneAppoint(@Path("cno")cno:String,@Header("Authorization") token:String): Deferred<Response<NetworkCard>>
+
 
     @POST("staff/report")
     fun postReport(@Body report: NetworkReport, @Path("username")username: String,@Header("Authorization") token:String):Deferred<Response<NetworkReport>>

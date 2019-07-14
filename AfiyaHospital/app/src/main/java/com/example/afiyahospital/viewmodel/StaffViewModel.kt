@@ -24,6 +24,12 @@ class StaffViewModel (private val staffRepository: StaffRepository): ViewModel()
 
     private val _allCardResponse = MutableLiveData<List<Card>>()
     private  var viewModelJob = Job()
+
+    private val _oneHospital = MutableLiveData<Hospital>()
+
+    val hospital :LiveData<Hospital>
+    get() = _oneHospital
+
     val hospitalAppointments:   LiveData<List<Card>>
        get() = _allCardResponse
     fun getHospitalAppointments(token: String) =
@@ -34,7 +40,8 @@ class StaffViewModel (private val staffRepository: StaffRepository): ViewModel()
     fun createHospital(hospital:NetworkHospital,token: String){
         viewModelScope.launch {
             try {
-               staffRepository.registerSHospital(hospital,token)
+                _oneHospital.postValue(staffRepository.registerSHospital(hospital,token))
+
             }
             catch (e: ConnectException){
                 this.coroutineContext.cancel()
