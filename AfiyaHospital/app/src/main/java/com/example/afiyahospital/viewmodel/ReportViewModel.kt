@@ -39,6 +39,4 @@ class ReportViewModel (private val reportRepository: ReportRepository): ViewMode
         super.onCleared()
         viewModelJob.cancel()
     }
-
-
 }

@@ -10,10 +10,7 @@ import okhttp3.OkHttpClient
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Path
+import retrofit2.http.*
 import java.util.concurrent.TimeUnit
 
 interface LoginService {
@@ -22,8 +19,8 @@ interface LoginService {
     @GET("access-denied")
     fun accessDenied(): Deferred<Response<String>>
 
-    @POST("login/{username/{password}}")
-    fun getLogin(@Path("username") username:String, @Path("password") password:String): Deferred<Response<LoginResponse>>
+    @POST("login")
+    fun getLogin(@Query("username") username:String, @Query("password") password:String): Deferred<Response<LoginResponse>>
 
     @POST("registerClient")
     fun registerClient(@Body user:NetworkUser) : Deferred<Response<NetworkUser>>
@@ -31,8 +28,12 @@ interface LoginService {
 
     companion object {
         fun getInstance(): LoginService {
+            val client = OkHttpClient
+                .Builder()
+                .build()
             val retrofit = Retrofit.Builder()
                 .baseUrl(BASE_URL)
+                .client(client)
                 .addConverterFactory(MoshiConverterFactory.create())
                 .addCallAdapterFactory(CoroutineCallAdapterFactory())
                 .build()

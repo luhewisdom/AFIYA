@@ -15,7 +15,7 @@ data class NetworkUser(
     val role:String)
 
 fun NetworkUser.asDatabaseModel(): User {
-    return User(username = username,password = password,name = name,lname = lname,
+    return User(id = id,username = username,password = password,name = name,lname = lname,
         email = email,phone = phone,role = role)
 }
 

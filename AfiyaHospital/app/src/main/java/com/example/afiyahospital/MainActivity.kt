@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
 import com.example.afiyahospital.databinding.ActivityMainBinding
@@ -11,11 +13,13 @@ import com.example.afiyahospital.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var drawerLayout:DrawerLayout
+    private lateinit var navController:NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this,R.layout.activity_main)
-        val navController = this.findNavController(R.id.loginfragment)
+       // val navController = this.findNavController(R.id.loginfragment)
+        navController = Navigation.findNavController(this, R.id.nav_fragment)
         drawerLayout = binding.drawerlayout
         NavigationUI.setupActionBarWithNavController(this,navController,drawerLayout)
 
@@ -25,7 +29,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        val navController = this.findNavController(R.id.loginfragment)
+//        val navController = this.findNavController()
         return NavigationUI.navigateUp(navController,drawerLayout)
     }
 }

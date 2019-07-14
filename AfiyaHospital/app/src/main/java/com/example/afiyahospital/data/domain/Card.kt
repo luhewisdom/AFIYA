@@ -16,5 +16,4 @@ data class Card(
     val userName:String,
     val hospitalName:String
 ): Serializable {
-
 }

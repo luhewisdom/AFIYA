@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-
+    
+    <item android:title="@string/login" android:id="@+id/login"/>
+    <item android:title="@string/signin" android:id="@+id/signUp"/>
     <item android:title="How to?"/>
     <item android:title="About us"/>
 </menu>

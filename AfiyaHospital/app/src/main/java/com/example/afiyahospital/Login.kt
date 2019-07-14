@@ -2,8 +2,11 @@ package com.example.loginpage
 
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.os.AsyncTask
+import android.os.Build
 import android.os.Bundle
+import android.os.Looper
 import android.text.TextUtils
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -12,12 +15,22 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.NavDirections
 import androidx.navigation.Navigation
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.example.afiyahospital.R
+import com.example.afiyahospital.Utilits.AuthenticationState
+import com.example.afiyahospital.Utilits.InjectorUtils
+import com.example.afiyahospital.Utilits.SHARED_PREFERENCE_FILE
+import com.example.afiyahospital.Utilits.SharedPrefUtil
 import com.example.afiyahospital.databinding.FragmentLoginBinding
+import com.example.afiyahospital.viewmodel.LoginViewModel
 import com.example.loginpage.viewmodel.UserViewModel
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_login.view.*
 
 
@@ -26,10 +39,18 @@ class Login : Fragment() {
 
     private lateinit var  usernameEditText:EditText
     private lateinit var passwordEditText : EditText
-    lateinit var userViewModel: UserViewModel
+
+    lateinit var sharedPrefrence:SharedPreferences
+    private val loginViewModel:LoginViewModel by viewModels{
+        InjectorUtils.provideLoginViewModelFactory(requireContext())
+    }
+
     var userOne:Boolean = false
 
-
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        sharedPrefrence  = requireActivity().getSharedPreferences(SHARED_PREFERENCE_FILE,Context.MODE_PRIVATE)
+    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -39,38 +60,23 @@ class Login : Fragment() {
         val binding :FragmentLoginBinding = DataBindingUtil.inflate(
             inflater,R.layout.fragment_login,container,false
         )
+        binding.setLifecycleOwner(viewLifecycleOwner)
 
         usernameEditText = binding.usernameId
         passwordEditText = binding.passId
         val loginButton = binding.loginbuttonId
         val signupButton = binding.signupbuttonId
 
-        loginButton.setOnClickListener {
-           AsyncTask.execute {
-               // userOne= userViewModel.oneUser(usernameEditText.text.toString(),passwordEditText.text.toString())
 
-           }
-            if(!emptyValidation())
-            {
-                if(userOne == true)
 
-                    {
-
-                        view?.findNavController()?.navigate(R.id.action_login_to_hospitalPage)
-
-                    }
-                        else
-                    {
-                        Toast.makeText(activity, "Unregistered user, or incorrect", Toast.LENGTH_SHORT).show()
-                }
-            }
-            else{
-                Toast.makeText(activity, "Empty Fields", Toast.LENGTH_SHORT).show()
-            }
-
-        }
         signupButton.setOnClickListener {
             view?.findNavController()?.navigate(R.id.action_login_to_signUp)
+
+        }
+        loginButton.setOnClickListener {
+            login()
+            emptyValidation()
+            clearFields()
 
         }
         return binding.root
@@ -85,4 +91,58 @@ class Login : Fragment() {
         return false
     }
 
+    private fun login(){
+
+            val job = loginViewModel.login(usernameEditText.text.toString(),passwordEditText.text.toString())
+            subscribeLoginResponse()
+            subscribeAuthenticationState()
+
+    }
+
+
+    private fun subscribeLoginResponse(){
+        loginViewModel.loginResponse.observe(this, Observer {res->
+            if(res.isSuccessful){
+
+                SharedPrefUtil.savePreference(sharedPrefrence,res.body()!!.token,res.body()!!.username,res.body()!!.role)
+                //set authentication state
+                loginViewModel.acceptAuthentication()
+                successLogin(res.body()!!.role)
+            }
+            else{
+                loginViewModel.refuseAuthentication()
+            } })
+    }
+    private fun subscribeAuthenticationState(){
+        loginViewModel.autententicationState.observe(viewLifecycleOwner, Observer { authenticationState ->
+            when (authenticationState) {
+                AuthenticationState.AUTHENTICATED -> findNavController().popBackStack()
+            }
+        })
+    }
+
+    private fun clearFields(){
+        usernameEditText.setText("")
+        passwordEditText.setText("")
+    }
+
+    fun successLogin( role:String) {
+        if(role == "STAFF")
+        {
+            requireView().findNavController().navigate(R.id.appointmentFragment)
+
+        }
+        else if (role =="SUPER")
+        {
+            requireView().findNavController().navigate(R.id.superFragment)
+        }
+        else if (role == "client")
+        {
+            requireView().findNavController().navigate(R.id.hospitalPage)
+        }
+        else{
+            requireView().findNavController().navigate(R.id.login)
+        }
+
+    }
 }

@@ -8,9 +8,10 @@
                 app:exitAnim="@anim/fade_out" app:popEnterAnim="@anim/slide_in_left"
                 app:popExitAnim="@anim/slide_in_right"/>
         <action android:id="@+id/action_login_to_superFragment2" app:destination="@id/superFragment"/>
-        <action android:id="@+id/action_login_to_appointmentsFragment" app:destination="@id/appointmentsFragment"/>
-        <action android:id="@+id/action_login_to_mapFragment" app:destination="@id/mapFragment"/>
+	    <action android:id="@+id/action_login_to_mapFragment" app:destination="@id/mapFragment"/>
         <action android:id="@+id/action_login_to_hospitalPage" app:destination="@id/hospitalPage"/>
+	    <action android:id="@+id/action_login_to_appointmentsFragment" app:destination="@id/appointmentsFragment"/>
+        <action android:id="@+id/action_login_to_reportForHospital" app:destination="@id/reportForHospital"/>
     </fragment>
     <fragment android:id="@+id/signUp" android:name="com.example.loginpage.SignUp" android:label="SignUp" tools:layout="@layout/fragment_sign_up">
         <action android:id="@+id/action_signUp_to_login" app:destination="@id/login"/>
@@ -39,9 +40,13 @@
     <fragment android:id="@+id/appointmentFragment" android:name="com.example.afiyahospital.AppointmentFragment"
               android:label="AppointmentFragment"/>
     <fragment android:id="@+id/setAppointmnetFragment" android:name="com.example.afiyahospital.SetAppointmnetFragment"
-              android:label="SetAppointmnetFragment"/>
+              android:label="SetAppointmnetFragment">
+        <action android:id="@+id/action_setAppointmnetFragment_to_addAppointment" app:destination="@id/addAppointment"/>
+    </fragment>
     <fragment android:id="@+id/checkReport" android:name="com.example.afiyahospital.CheckReport"
-              android:label="CheckReport"/>
+              android:label="CheckReport">
+        <action android:id="@+id/action_checkReport_to_detailReport" app:destination="@id/detailReport"/>
+    </fragment>
     <fragment android:id="@+id/mapFragment" android:name="com.example.afiyahospital.MapFragment"
               android:label="MapFragment"/>
     <fragment android:id="@+id/oneHospital" android:name="com.example.afiyahospital.OneHospital"
@@ -51,5 +56,15 @@
     <fragment android:id="@+id/hospitalPage2" android:name="com.example.loginpage.HospitalPage"
               android:label="HospitalPage"  tools:layout="@layout/fragment_hospital">
         <action android:id="@+id/action_hospitalPage2_to_oneHospital" app:destination="@id/oneHospital"/>
+    </fragment>
+    <fragment android:id="@+id/addAppointment" android:name="com.example.afiyahospital.AddAppointment"
+              android:label="fragment_add_appointment" tools:layout="@layout/fragment_add_appointment"/>
+    <fragment android:id="@+id/detailReport" android:name="com.example.afiyahospital.DetailReport"
+              android:label="fragment_detail_report" tools:layout="@layout/fragment_detail_report"/>
+    <fragment android:id="@+id/createReport" android:name="com.example.afiyahospital.CreateReport"
+              android:label="fragment_create_report" tools:layout="@layout/fragment_create_report"/>
+    <fragment android:id="@+id/reportForHospital" android:name="com.example.afiyahospital.ReportForHospital"
+              android:label="fragment_report_for_hospital" tools:layout="@layout/fragment_report_for_hospital">
+        <action android:id="@+id/action_reportForHospital_to_createReport" app:destination="@id/createReport"/>
     </fragment>
 </navigation>

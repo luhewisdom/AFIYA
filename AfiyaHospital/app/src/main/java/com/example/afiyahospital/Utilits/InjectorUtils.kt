@@ -17,15 +17,9 @@
 package com.example.afiyahospital.Utilits
 
 import android.content.Context
-import com.example.afiyahospital.network.CardService
+import com.example.afiyahospital.network.*
 
-import com.example.afiyahospital.network.HospitalService
-import com.example.afiyahospital.network.StaffService
-import com.example.afiyahospital.network.UserService
-import com.example.afiyahospital.repository.CardRepository
-import com.example.afiyahospital.repository.HospitalRepository
-import com.example.afiyahospital.repository.ReportRepository
-import com.example.afiyahospital.repository.StaffRepository
+import com.example.afiyahospital.repository.*
 import com.example.afiyahospital.viewmodel.*
 import com.example.loginpage.data.AfiaDataBase
 import com.example.loginpage.data.HospitalDao
@@ -80,5 +74,11 @@ object InjectorUtils {
     }
     fun provideStaffViewModelFactory(context: Context):UserViewModelFactory{
         return UserViewModelFactory(getUserRepoostiory(context))
+    }
+    private  fun getLoginRepository(context: Context):LoginRepository{
+        return LoginRepository(AfiaDataBase.getDatabase(context).userDao(), LoginService.getInstance())
+    }
+    fun provideLoginViewModelFactory(context: Context):LoginViewModelFactory{
+        return LoginViewModelFactory(getLoginRepository(context),context)
     }
 }

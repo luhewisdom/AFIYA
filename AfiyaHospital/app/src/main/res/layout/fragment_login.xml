@@ -4,7 +4,11 @@
          xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools">
 
 
-
+    <data>
+        <variable name="viewModel"
+                type="android.view.View.OnClickListener"/>
+                
+    </data>
 <androidx.constraintlayout.widget.ConstraintLayout
              android:layout_width="match_parent"
              android:layout_height="match_parent"
@@ -65,7 +69,6 @@
                     android:textAllCaps="false"
                     android:textSize="21sp"
 
-
             />
             <Button
                     android:id="@+id/signupbutton_id"
@@ -78,14 +81,9 @@
                     android:text="signup"
                     android:textAllCaps="false"
                     android:textSize="21sp"
-
-
             />
         </LinearLayout>
-
-
     </RelativeLayout>
     </ScrollView>
-
 </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

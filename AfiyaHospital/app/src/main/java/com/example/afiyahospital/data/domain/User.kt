@@ -4,13 +4,9 @@ import androidx.room.*
 import com.example.afiyahospital.data.Role
 import java.io.Serializable
 
-@Entity(foreignKeys = arrayOf(
-    ForeignKey(entity = Role::class,
-        parentColumns = arrayOf("id"),
-        childColumns = arrayOf("role"),
-        onDelete = ForeignKey.NO_ACTION)
-),indices = [androidx.room.Index("role")])
+@Entity
 data class User(
+    @PrimaryKey(autoGenerate = true) val id:Long,
     val username:String,
     val password:String,
     val name:String,
@@ -18,5 +14,5 @@ data class User(
     val email:String,
     val phone:String,
     val role:String) :Serializable{
-    @PrimaryKey(autoGenerate = true) var id:Long =0
+
 }

@@ -27,18 +27,3 @@ fun NetworkHospital.asDatabaseModel(): Hospital {
     return Hospital(id = id, hname = hname,image = image,owendby = owendby,phoneNumbe =phoneNumbe
     ,relativeAdress = relativeAdress,latitude = latitude,longtuide = longtuide,user = user)
 }
-fun NetworkHospitals.asDatabaseModel(): List<Hospital> {
-    return hospitals.map {
-        Hospital(
-            id = it.id,
-            hname = it.hname,
-            image = it.image,
-            owendby = it.owendby,
-            phoneNumbe = it.phoneNumbe,
-            relativeAdress = it.relativeAdress,
-            latitude = it.latitude,
-            longtuide = it.longtuide,
-            user = it.user
-            )
-    }
-}

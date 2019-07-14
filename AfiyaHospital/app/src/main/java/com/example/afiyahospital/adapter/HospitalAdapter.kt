@@ -31,8 +31,8 @@ class HospitalAdapter: ListAdapter<Hospital, HospitalAdapter.ViewHolder>(Hospita
         }
     }
     private fun createOnClickListener(hospitalId:Long):View.OnClickListener{
-        return View.OnClickListener { val direction:NavDirections =
-            HospitalPageDirections.actionHospitalPage2ToOneHospital(hospitalId)
+        return View.OnClickListener {
+            val direction:NavDirections =  HospitalPageDirections.actionHospitalPage2ToOneHospital(hospitalId)
             it.findNavController().navigate(direction)
         }
     }
