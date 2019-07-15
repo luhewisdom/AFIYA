@@ -3,6 +3,6 @@
     
     <item android:title="@string/login" android:id="@+id/login"/>
     <item android:title="@string/signin" android:id="@+id/signUp"/>
-    <item android:title="How to?"/>
+    <item android:title="Check Report" android:id="@+id/checkReport"/>
     <item android:title="About us"/>
 </menu>

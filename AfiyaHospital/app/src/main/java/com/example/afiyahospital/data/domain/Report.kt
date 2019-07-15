@@ -9,10 +9,10 @@ import java.util.*
 data class Report(
     @PrimaryKey val id:Long,
     val reportNo:String,
-    val bloodTesst:String,
+    val bloodTest:String,
     val urinTest: String,
     val otherTest:String,
-    val reportDate: Date,
+    val reportDate: String,
     val user :String,
     val hospital :String
     ): Serializable {

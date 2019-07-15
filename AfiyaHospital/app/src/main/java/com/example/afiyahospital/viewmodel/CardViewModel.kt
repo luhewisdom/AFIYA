@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.afiyahospital.data.Card
 import com.example.afiyahospital.data.Hospital
+import com.example.afiyahospital.data.Report
 import com.example.afiyahospital.network.NetworkCard
 import com.example.afiyahospital.repository.CardRepository
 import com.example.afiyahospital.repository.HospitalRepository
@@ -23,6 +24,12 @@ class CardViewModel(private val cardRepository: CardRepository): ViewModel()
    private val _cards = MutableLiveData<List<Card>>()
 
     private val _oneCard = MutableLiveData<Card>()
+
+
+    private val _reports = MutableLiveData<List<Report>>()
+
+    val reports : LiveData<List<Report>>
+    get() = _reports
 
     val card:LiveData<Card>
     get() = _oneCard
@@ -45,6 +52,20 @@ class CardViewModel(private val cardRepository: CardRepository): ViewModel()
 
         }
     }
+
+    fun refershReportFromRepository(token: String){
+        viewModelScope.launch {
+            try {
+                val cards = cardRepository.getAppointments(token)
+                _reports.postValue(cards)
+            }
+            catch (networkError: IOException)
+            {
+                Log.d("No Connection", "No connection")
+            }
+
+        }
+    }
     fun setAppointment(card:NetworkCard,token:String)=
         viewModelScope.launch {
             try {
@@ -55,21 +76,6 @@ class CardViewModel(private val cardRepository: CardRepository): ViewModel()
                 this.coroutineContext.cancel()
             }
         }
-
-
-    private fun refreshCardOne(cno:String,token: String)
-    {
-        viewModelScope.launch {
-            try {
-                cardRepository.refreshOneCard(cno,token)
-            }
-            catch (networkError:IOException)
-            {
-                Log.d("No Connection", "No connection")
-            }
-        }
-    }
-
 
 
     override fun onCleared() {

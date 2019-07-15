@@ -8,6 +8,10 @@ interface ReportDao {
     @Query("SELECT * from report ORDER BY reportNo ASC")
     fun getAllReport(): LiveData<List<Report>>
 
+
+    @Query("SELECT * from report ORDER BY reportNo ASC")
+    fun getAllReportRoom():List<Report>
+
     @Query("SELECT * FROM report Where reportNo =:rno")
     fun getReportByNo(rno :String): LiveData<Report>
 

@@ -43,7 +43,7 @@ object InjectorUtils {
     }
 
     private fun getCardRepository(context: Context):CardRepository{
-        return CardRepository(AfiaDataBase.getDatabase(context).cardDao(), CardService.getInstance())
+        return CardRepository(AfiaDataBase.getDatabase(context).cardDao(),AfiaDataBase.getDatabase(context).reportDao(), CardService.getInstance())
     }
     fun provideCardViewModelFactory(context: Context):CardViewModelFactory{
         val repository = getCardRepository(context)

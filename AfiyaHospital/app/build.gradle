@@ -122,4 +122,5 @@ dependencies {
     // Lifecycle components
     implementation "androidx.lifecycle:lifecycle-extensions:$arch_lifecycle_version"
     kapt "androidx.lifecycle:lifecycle-compiler:$arch_lifecycle_version"
+    implementation 'androidx.multidex:multidex:2.0.1'
 }

@@ -2,46 +2,46 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
-        >
-    <data>
-        <variable name="clickListener"
-                  type="android.view.View.OnClickListener"/>
-        <variable name="hospital"
-                  type="com.example.afiyahospital.data.Hospital"/>
-    </data>
+>
+<data>
+    <variable name="clickListener"
+              type="android.view.View.OnClickListener"/>
+    <variable name="hospital"
+              type="com.example.afiyahospital.data.Hospital"/>
+</data>
+
+<com.google.android.material.card.MaterialCardView
+        
+        android:id="@+id/cat_card_list_item_card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="8dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:onClick="@{clickListener}"
+        android:minHeight="118dp">
     
-    <com.google.android.material.card.MaterialCardView
-  
-            android:id="@+id/cat_card_list_item_card"
-            android:layout_width="match_parent"
+    <TextView
+            android:id="@+id/cat_card_list_item_title"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
             android:layout_marginTop="8dp"
             android:layout_marginRight="16dp"
-            android:layout_marginBottom="8dp"
-            android:clickable="true"
-            android:focusable="true"
-    android:onClick="@{clickListener}"
-            android:minHeight="118dp">
-        
-        <TextView
-                android:id="@+id/cat_card_list_item_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginRight="16dp"
-                android:text="@{hospital.hname}"
-                android:textAppearance="?attr/textAppearanceHeadline6"/>
-        
-        <ImageView
-                android:id="@+id/cat_card_list_item_drag_handle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:padding="16dp"
-                android:src="@drawable/ic_launcher_foreground"
-                />
-    </com.google.android.material.card.MaterialCardView>
+            android:text="@{hospital.hname}"
+            android:textAppearance="?attr/textAppearanceHeadline6"/>
+    
+    <ImageView
+            android:id="@+id/cat_card_list_item_drag_handle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:padding="16dp"
+            android:src="@drawable/ic_launcher_foreground"
+    />
+</com.google.android.material.card.MaterialCardView>
 
 </layout>

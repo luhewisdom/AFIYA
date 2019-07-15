@@ -19,7 +19,7 @@
                 android:clipToPadding="false"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:context="com.google.samples.apps.sunflower.GardenActivity"
-                tools:listitem="@layout/list_item_hospital"
+                tools:listitem="@layout/list_item_appoint"
                 tools:layout_editor_absoluteX="-4dp" android:layout_marginBottom="8dp"
                 app:layout_constraintBottom_toBottomOf="parent" tools:ignore="MissingConstraints"
                 android:layout_marginTop="8dp" app:layout_constraintTop_toTopOf="parent"

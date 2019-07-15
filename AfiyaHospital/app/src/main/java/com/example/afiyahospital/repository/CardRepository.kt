@@ -2,9 +2,7 @@ package com.example.afiyahospital.repository
 
 import android.util.Log
 import androidx.lifecycle.LiveData
-import com.example.afiyahospital.data.Card
-import com.example.afiyahospital.data.CardDao
-import com.example.afiyahospital.data.Hospital
+import com.example.afiyahospital.data.*
 import com.example.afiyahospital.network.CardService
 import com.example.afiyahospital.network.HospitalService
 import com.example.afiyahospital.network.NetworkCard
@@ -16,7 +14,7 @@ import java.net.ConnectException
 
 
 
-class   CardRepository constructor(private val cardDao: CardDao, private val  cardService: CardService) {
+class   CardRepository constructor(private val cardDao: CardDao,private  val reportDao: ReportDao, private val  cardService: CardService) {
 
 
     suspend fun refreshOneCard(cno:String,token:String)=
@@ -48,7 +46,6 @@ class   CardRepository constructor(private val cardDao: CardDao, private val  ca
             }
         }
 
-    ////
     suspend fun setAppointment(c: NetworkCard,token: String):Card =
         withContext(Dispatchers.IO){
 
@@ -57,11 +54,37 @@ class   CardRepository constructor(private val cardDao: CardDao, private val  ca
             ).await().body()
 
 
-             cardDao.insertCard(cardNetwork!!.asDatabaseModel())
-             cardDao.getCardRoom(c.cardNo)
+            cardDao.insertCard(cardNetwork!!.asDatabaseModel())
+            cardDao.getCardRoom(c.cardNo)
         }
 
 
+
+    suspend fun getAppointments(token: String)=
+        withContext(Dispatchers.IO){
+            try {
+                val reports = cardService.getReports(token).await().body()
+                Log.v("LLLLLLLLLLLL",reports.toString())
+                Log.v("LLLLLLLLLLLL",token)
+                if (reports !=null)
+                {
+                    for (res in reports){
+
+                        val reportt = Report(id = res.id,reportNo = res.reportNo,reportDate =res.reportDate,bloodTest = res.bloodTest,urinTest =  res.urinTest,otherTest = res.otherTest,
+                            hospital = res.hospital,user = res.user)
+                        reportDao.insertReport(reportt)
+
+                    }
+                }
+                return@withContext reportDao.getAllReportRoom()
+            }
+            catch (e: ConnectException)
+            {
+                return@withContext reportDao.getAllReportRoom()
+            }
+            return@withContext reportDao.getAllReportRoom()
+        }
+    ////
 
     ////////////////////////////////////////////////
 

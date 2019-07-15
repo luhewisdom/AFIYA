@@ -8,16 +8,16 @@ import java.util.*
 data class NetworkReport(
     val id:Long,
     val reportNo:String,
-    val bloodTesst:String,
+    val bloodTest:String,
     val urinTest: String,
     val otherTest:String,
-    val reportDate: Date,
+    val reportDate: String,
     val user :String,
     val hospital :String
 )
 
 fun NetworkReport.asDatabaseModel():Report {
-    return Report(id = id, reportDate = reportDate,bloodTesst = bloodTesst,urinTest = urinTest
-    ,otherTest = otherTest,reportNo = reportNo,user = user,hospital = hospital)
+    return Report(id = id, reportNo = reportNo,bloodTest = bloodTest,urinTest = urinTest
+    ,otherTest = otherTest,reportDate = reportDate,user = user,hospital = hospital)
 }
 

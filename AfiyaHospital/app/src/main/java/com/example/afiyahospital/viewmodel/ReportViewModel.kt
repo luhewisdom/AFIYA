@@ -1,5 +1,6 @@
 package com.example.afiyahospital.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,16 +11,23 @@ import com.example.afiyahospital.repository.CardRepository
 import com.example.afiyahospital.repository.ReportRepository
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import java.io.IOException
 
 class ReportViewModel (private val reportRepository: ReportRepository): ViewModel()
 {
     private val _allReportResponse = MutableLiveData<List<Report>>()
     private  var viewModelJob = Job()
-    val hospitalAppointments: LiveData<List<Report>>
+    val reports: LiveData<List<Report>>
         get() = _allReportResponse
     fun getHospitalAppointments(hname:String,token: String) =
         viewModelScope.launch {
-            _allReportResponse.postValue(reportRepository.getReportFromHospital(hname,token) as List<Report>)
+            try {
+                _allReportResponse.postValue(reportRepository.getReportFromHospital(hname,token) as List<Report>)
+            }
+            catch (networkError: IOException)
+            {
+                Log.d("No Connection", "No connection")
+            }
         }
 
     private var _eventNetworkError = MutableLiveData<Boolean>(false)
