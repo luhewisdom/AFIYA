@@ -7,6 +7,7 @@ import com.example.afiyahospital.data.CardDao
 import com.example.afiyahospital.data.Hospital
 import com.example.afiyahospital.network.CardService
 import com.example.afiyahospital.network.HospitalService
+import com.example.afiyahospital.network.NetworkCard
 import com.example.afiyahospital.network.asDatabaseModel
 import com.example.loginpage.data.HospitalDao
 import kotlinx.coroutines.Dispatchers
@@ -48,11 +49,16 @@ class   CardRepository constructor(private val cardDao: CardDao, private val  ca
         }
 
     ////
-    suspend fun setAppointment(card: Card,hname :String,token: String) =
+    suspend fun setAppointment(c: NetworkCard,token: String):Card =
         withContext(Dispatchers.IO){
-            val card =cardService.setAppoiintment(card,hname,token).await().body()
-            cardDao.insertCard(card!!.asDatabaseModel())
-            cardDao.getAllCard()
+
+            val cardNetwork =  cardService.setAppoiintment(token
+                ,c.cardNo,c.description,c.approved,c.hospitalName
+            ).await().body()
+
+
+             cardDao.insertCard(cardNetwork!!.asDatabaseModel())
+             cardDao.getCardRoom(c.cardNo)
         }
 
 

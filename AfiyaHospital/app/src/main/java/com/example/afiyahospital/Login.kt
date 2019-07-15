@@ -94,7 +94,7 @@ class Login : Fragment() {
 
     private fun login(){
 
-            val job = loginViewModel.login(usernameEditText.text.toString(),passwordEditText.text.toString())
+            loginViewModel.login(usernameEditText.text.toString(),passwordEditText.text.toString())
             subscribeLoginResponse()
             subscribeAuthenticationState()
 

@@ -89,8 +89,6 @@ class CreateHospital : Fragment() {
 
                 val direction= CreateHospitalDirections.actionCreateHospitalToOneHospital2(hospitals.id)
                 findNavController().navigate(direction)
-
-
         }
     }
 

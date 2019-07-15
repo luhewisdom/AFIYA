@@ -7,17 +7,25 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.afiyahospital.data.Card
 import com.example.afiyahospital.data.Hospital
+import com.example.afiyahospital.network.NetworkCard
 import com.example.afiyahospital.repository.CardRepository
 import com.example.afiyahospital.repository.HospitalRepository
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import java.io.IOException
+import java.net.ConnectException
 
 class CardViewModel(private val cardRepository: CardRepository): ViewModel()
 {
     private  var viewModelJob = Job()
 
    private val _cards = MutableLiveData<List<Card>>()
+
+    private val _oneCard = MutableLiveData<Card>()
+
+    val card:LiveData<Card>
+    get() = _oneCard
 
     val cards: LiveData<List<Card>>
     get() = _cards
@@ -37,9 +45,15 @@ class CardViewModel(private val cardRepository: CardRepository): ViewModel()
 
         }
     }
-    private fun setAppointment(card:Card,hname:String,token:String)=
+    fun setAppointment(card:NetworkCard,token:String)=
         viewModelScope.launch {
+            try {
+               _oneCard.postValue(cardRepository.setAppointment(card,token))
 
+            }
+            catch (e: ConnectException){
+                this.coroutineContext.cancel()
+            }
         }
 
 

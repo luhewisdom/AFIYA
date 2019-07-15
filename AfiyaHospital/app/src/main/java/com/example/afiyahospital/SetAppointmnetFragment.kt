@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.example.afiyahospital.Utilits.*
 import com.example.afiyahospital.adapter.CardAdapter
@@ -46,7 +47,7 @@ class SetAppointmnetFragment : Fragment() {
         binding.setLifecycleOwner(this)
         val adapter = CardAdapter()
         binding.appointList.adapter = adapter
-
+        binding.fab = fab()
         getAppoint(token)
         subscribeUi(adapter)
         return binding.root
@@ -58,9 +59,16 @@ class SetAppointmnetFragment : Fragment() {
         }
 
     }
+
     private fun getAppoint(t:String)
     {
         viewModel.refershCardFromRepository(t)
+    }
+
+    private fun fab():View.OnClickListener {
+        return View.OnClickListener {
+            requireView().findNavController().navigate(R.id.addAppointment)
+        }
     }
 
 }

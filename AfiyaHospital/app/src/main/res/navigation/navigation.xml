@@ -65,7 +65,9 @@
         <action android:id="@+id/action_hospitalPage2_to_oneHospital" app:destination="@id/oneHospital"/>
     </fragment>
     <fragment android:id="@+id/addAppointment" android:name="com.example.afiyahospital.AddAppointment"
-              android:label="fragment_add_appointment" tools:layout="@layout/fragment_add_appointment"/>
+              android:label="fragment_add_appointment" tools:layout="@layout/fragment_add_appointment">
+        <action android:id="@+id/action_addAppointment_to_detailAppoint" app:destination="@id/detailAppoint"/>
+    </fragment>
     <fragment android:id="@+id/detailReport" android:name="com.example.afiyahospital.DetailReport"
               android:label="fragment_detail_report" tools:layout="@layout/fragment_detail_report"/>
     <fragment android:id="@+id/createReport" android:name="com.example.afiyahospital.CreateReport"
@@ -77,5 +79,7 @@
     <fragment android:id="@+id/detailAppoint" android:name="com.example.afiyahospital.DetailAppoint"
               android:label="fragment_detail_appoint" tools:layout="@layout/fragment_detail_appoint">
         <argument android:name="rno" app:argType="string"/>
+        <action android:id="@+id/action_detailAppoint_to_setAppointmnetFragment"
+                app:destination="@id/setAppointmnetFragment"/>
     </fragment>
 </navigation>

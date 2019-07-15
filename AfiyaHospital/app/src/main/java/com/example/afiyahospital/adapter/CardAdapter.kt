@@ -25,13 +25,13 @@ class CardAdapter: ListAdapter<Card, CardAdapter.ViewHolder>(CardDiffCallback())
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val card =getItem(position)
         holder.apply {
-            bind(createOnClickListener(card.id),card)
+            bind(createOnClickListener(card.cardNo),card)
             itemView.tag = card
         }
     }
-    private fun createOnClickListener(hospitalId:Long): View.OnClickListener{
+    private fun createOnClickListener(cno:String): View.OnClickListener{
         return View.OnClickListener {
-            val direction: NavDirections = SetAppointmnetFragmentDirections.actionSetAppointmnetFragmentToDetailAppoint()
+            val direction: NavDirections = SetAppointmnetFragmentDirections.actionSetAppointmnetFragmentToDetailAppoint(cno)
             it.findNavController().navigate(direction)
         }
     }

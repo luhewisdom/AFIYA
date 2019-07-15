@@ -52,6 +52,9 @@ object InjectorUtils {
     fun provideHospitalDetailViewModel(context: Context,id:Long):HospitalDetailViewModelFactory{
         return HospitalDetailViewModelFactory(getHospitalRepository(context),id)
     }
+    fun provideCardDetailViewModel(context: Context,cno:String):CardDetailViewModelFactory{
+        return CardDetailViewModelFactory(getCardRepository(context),cno)
+    }
     private fun getReportRepository(context: Context):ReportRepository{
         return ReportRepository(AfiaDataBase.getDatabase(context).reportDao(), StaffService.getInstance())
     }

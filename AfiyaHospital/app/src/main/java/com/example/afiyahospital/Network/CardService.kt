@@ -34,8 +34,12 @@ interface CardService {
     fun getOneReport(@Path("rno") rno:String,@Header("Authorization") token:String): Deferred<Response<NetworkReport>>
 
 
-    @POST("appoint/{hospital}")
-    fun  setAppoiintment(@Body card: Card, @Path("hospital")hospital:String,@Header("Authorization") token:String) :Deferred<Response<NetworkCard>>
+    @POST("appoint")
+    fun  setAppoiintment(  @Header("Authorization") token:String,
+                            @Query("cardNo") cardNo:String,
+                            @Query("desc")desc:String,
+                            @Query("approved")approve:String,
+                            @Query("hospital") hospital:String) :Deferred<Response<NetworkCard>>
 
 
     companion object {

@@ -17,6 +17,9 @@ interface CardDao {
     fun getCardByNo(cardno :String): LiveData<Card>
 
     @Query("SELECT * FROM card Where cardNo =:cardno")
+    fun getCardRoom(cardno :String): Card
+
+    @Query("SELECT * FROM card Where cardNo =:cardno")
     fun getCardByNoRoom(cardno :String): Card
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
